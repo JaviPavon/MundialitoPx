@@ -106,3 +106,26 @@ class CrearPiloto(CreateView):
     success_url = reverse_lazy("admin")
 
 
+# CRUD Circuito
+class DetallesCircuito(DetailView):
+    model = Circuito
+    template_name = "mundialitopx/admin/circuitos/detalle.html"
+
+class BorrarCircuito(DeleteView):
+    model = Circuito
+    template_name = "mundialitopx/admin/circuitos/borrar.html"
+    success_url = reverse_lazy("admin")
+
+class EditarCircuito(UpdateView):
+    model = Circuito
+    fields = ['nombre', 'alias', 'pista', 'pais']
+    template_name = "mundialitopx/admin/circuitos/editar.html"
+    template_name_suffix = "_update_form"
+    success_url = reverse_lazy("admin")
+    
+class CrearCircuito(CreateView):
+    model = Circuito
+    fields = ['nombre', 'alias', 'pista', 'pais']
+    template_name = "mundialitopx/admin/circuitos/crear.html"
+    success_url = reverse_lazy("admin")
+
