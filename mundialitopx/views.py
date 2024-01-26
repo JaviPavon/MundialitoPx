@@ -82,5 +82,27 @@ class CrearEscuderia(CreateView):
     template_name = "mundialitopx/admin/escuderias/crear.html"
     success_url = reverse_lazy("admin")
 
+# CRUD Piloto
+class DetallesPiloto(DetailView):
+    model = Piloto
+    template_name = "mundialitopx/admin/pilotos/detalle.html"
+
+class BorrarPiloto(DeleteView):
+    model = Piloto
+    template_name = "mundialitopx/admin/pilotos/borrar.html"
+    success_url = reverse_lazy("admin")
+
+class EditarPiloto(UpdateView):
+    model = Piloto
+    fields = ['nombre', 'dorsal', 'escuderia', 'pais', 'foto', 'puesto', 'biografia']
+    template_name = "mundialitopx/admin/pilotos/editar.html"
+    template_name_suffix = "_update_form"
+    success_url = reverse_lazy("admin")
+    
+class CrearPiloto(CreateView):
+    model = Piloto
+    fields = ['nombre', 'dorsal', 'escuderia', 'pais', 'foto', 'puesto', 'biografia']
+    template_name = "mundialitopx/admin/pilotos/crear.html"
+    success_url = reverse_lazy("admin")
 
 
