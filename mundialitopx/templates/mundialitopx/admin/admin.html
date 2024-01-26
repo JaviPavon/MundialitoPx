@@ -1,0 +1,78 @@
+{% extends 'mundialitopx/base.html' %}
+
+{% block content %}
+	<div class="row pt-5">
+		<h2>Administración Mundialito Paxangars</h2>
+	</div>
+	<div class="row pt-5 justify-content-center grid gap-5">
+		
+		<div class=" card-menu col-2">
+			<a href="{% url 'piloto' %}">
+				<div class="cardp mcard card shadow w-100 h-100">
+					<div class="row pt-5">
+						<div class="col">
+							<i class=" plus bi bi-person-fill"></i>
+						</div>
+					</div>
+					<div class="row text-center">
+						<div class="col pt-3">
+							<p>Gestión de Pilotos</p>
+						</div>
+					</div>
+				</div>
+			</a>
+		</div>
+		<div class="card-menu col-2">
+			<a href="{% url 'escuderia'  %}">
+				<div class="cardp mcard card shadow w-100 h-100">
+					<div class="row pt-5">
+						<div class="col">
+							<i class="plus bi bi-car-front-fill"></i>
+						</div>
+					</div>
+					<div class="row text-center">
+						<div class="col pt-3">
+							<p>Gestión de Escuderias</p>
+						</div>
+					</div>
+				</div>
+			</a>
+		</div>
+		<div class="card-menu col-2">
+			<a href="{% url 'circuito' %}">
+				<div class="cardp mcard card shadow w-100 h-100">
+					<div class="row pt-5">
+						<div class="col">
+							<i class="plus bi bi-flag"></i>
+						</div>
+					</div>
+					<div class="row text-center">
+						<div class="col pt-3">
+							<p>Gestión de Circuitos</p>
+						</div>
+					</div>
+				</div>
+			</a>
+		</div>
+
+        <div class="card-menu col-2">
+			<a href="{% url 'pais' %}">
+				<div class="cardp mcard card shadow w-100 h-100">
+					<div class="row pt-5">
+						<div class="col">
+							<i class="plus bi bi-flag-fill"></i>
+						</div>
+					</div>
+					<div class="row text-center">
+						<div class="col pt-3">
+							<p>Gestión de Paises</p>
+						</div>
+					</div>
+				</div>
+			</a>
+		</div>
+				
+		
+		
+	</div>
+{% endblock %}
