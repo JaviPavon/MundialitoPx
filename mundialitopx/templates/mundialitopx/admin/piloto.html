@@ -1,0 +1,49 @@
+{% extends 'mundialitopx/base.html' %}
+
+{% block content %}
+	<div class="row pt-5">
+		<h2>Gestión de Pilotos</h2>
+	</div>
+	<div class="row pt-5 justify-content-center grid gap-5">
+		
+		<div class=" card-menu col-2">
+			<a href="{% url 'crear_piloto' %}">
+				<div class="cardp mcard card shadow w-100 h-100">
+					<div class="row pt-5">
+						<div class="col">
+							<i class=" plus bi bi-plus-circle-fill"></i>
+						</div>
+					</div>
+					<div class="row text-center">
+						<div class="col pt-3">
+							<p>Crear un Piloto</p>
+						</div>
+					</div>
+				</div>
+			</a>
+		</div>
+        <div class="row">
+            {% for piloto in pilotos %}
+
+        <div class="col-3">
+            <a href="{% url 'detalle_piloto' piloto.id %}">
+            <div class="card cardp text-center">
+                <div class="card-body">
+                    <div class="card-title">
+                        <div class="row">
+                            <div class="col-12"><img height="100px"  src="{{ piloto.foto.url}}" alt=""></div>
+                            <div class="col-12"><h2>{{ piloto.nombre }}</h2></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </a>
+        </div>
+    
+
+
+{% endfor %}
+        </div>
+		
+	</div>
+{% endblock %}

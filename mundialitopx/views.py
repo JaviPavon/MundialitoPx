@@ -21,17 +21,25 @@ from django.views.generic import (
 def admin(request):
     return render(request, "mundialitopx/admin/admin.html", {})
 
-def pilotoAdmin(request):
-    return render(request, "mundialitopx/admin/piloto.html", {})
+class ListPaises(ListView):
+    model = Pais
+    template_name = "mundialitopx/admin/pais.html"
+    context_object_name = "paises"
 
-def paisAdmin(request):
-    return render(request, "mundialitopx/admin/pais.html", {})
+class ListPilotos(ListView):
+    model = Piloto
+    template_name = "mundialitopx/admin/piloto.html"
+    context_object_name = "pilotos"
 
-def escuderiaAdmin(request):
-    return render(request, "mundialitopx/admin/escuderia.html", {})
+class ListEscuderias(ListView):
+    model = Escuderia
+    template_name = "mundialitopx/admin/escuderia.html"
+    context_object_name = "escuderias"
 
-def circuitoAdmin(request):
-    return render(request, "mundialitopx/admin/circuito.html", {})
+class ListCircuitos(ListView):
+    model = Circuito
+    template_name = "mundialitopx/admin/circuito.html"
+    context_object_name = "circuitos"
 
 def carreraAdmin(request):
     return render(request, "mundialitopx/admin/carrera.html", {})

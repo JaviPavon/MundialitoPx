@@ -1,0 +1,22 @@
+{% extends 'mundialitopx/base.html' %}
+{% load static %}
+    {% block content %}
+    <div class="container-fluid">
+        <div class="row pt-5">
+            <div class="col-6 offset-3">
+                <div class="card p-3 shadow">
+                    <div class="row ">
+                        <div class="col-12 borber border-3 m-3">
+                            <form action="{% url 'editar_circuito' object.id %}" enctype="multipart/form-data" method="post">
+                                {% csrf_token %}
+                                {{ forms.management_form }}
+                                {{ form.as_p }}
+                                <button class="btn btn-primary" type="submit">Editar Circuito</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock %}

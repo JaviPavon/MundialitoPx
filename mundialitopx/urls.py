@@ -3,6 +3,11 @@ from . import views
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from .views import (
+    ListPilotos, 
+    ListPaises, 
+    ListCircuitos, 
+    ListEscuderias, 
+
     DetallesPais, 
     CrearPais, 
     EditarPais, 
@@ -29,10 +34,10 @@ from .views import (
 
 urlpatterns = [
     path('', staff_member_required(views.admin), name='admin'),
-    path('inicio/admin/piloto', staff_member_required(views.pilotoAdmin), name='piloto'),
-    path('inicio/admin/pais', staff_member_required(views.paisAdmin), name='pais'),
-    path('inicio/admin/ecuderia', staff_member_required(views.escuderiaAdmin), name='escuderia'),
-    path('inicio/admin/circuito', staff_member_required(views.circuitoAdmin), name='circuito'),
+    path('inicio/admin/piloto', staff_member_required(ListPilotos.as_view()), name='piloto'),
+    path('inicio/admin/pais', staff_member_required(ListPaises.as_view()), name='pais'),
+    path('inicio/admin/ecuderia', staff_member_required(ListEscuderias.as_view()), name='escuderia'),
+    path('inicio/admin/circuito', staff_member_required(ListCircuitos.as_view()), name='circuito'),
     path('inicio/admin/carrera', staff_member_required(views.carreraAdmin), name='carrera'),
 
     path('inicio/admin/pais/detalle/<int:pk>', DetallesPais.as_view(), name='detalle_pais'),
@@ -40,10 +45,10 @@ urlpatterns = [
     path('inicio/admin/pais/crear', CrearPais.as_view(), name='crear_pais'),
     path('inicio/admin/pais/editar/<int:pk>', EditarPais.as_view(), name='editar_pais'),
 
-    path('inicio/admin/ecuderia/detalle/<int:pk>', DetallesEscuderia.as_view(), name='detalle_ecuderia'),
-    path('inicio/admin/ecuderia/borrar/<int:pk>', BorrarEscuderia.as_view(), name='borrar_ecuderia'),
-    path('inicio/admin/ecuderia/crear', CrearEscuderia.as_view(), name='crear_ecuderia'),
-    path('inicio/admin/ecuderia/editar/<int:pk>', EditarEscuderia.as_view(), name='editar_ecuderia'),
+    path('inicio/admin/ecuderia/detalle/<int:pk>', DetallesEscuderia.as_view(), name='detalle_escuderia'),
+    path('inicio/admin/ecuderia/borrar/<int:pk>', BorrarEscuderia.as_view(), name='borrar_escuderia'),
+    path('inicio/admin/ecuderia/crear', CrearEscuderia.as_view(), name='crear_escuderia'),
+    path('inicio/admin/ecuderia/editar/<int:pk>', EditarEscuderia.as_view(), name='editar_escuderia'),
 
     path('inicio/admin/piloto/detalle/<int:pk>', DetallesPiloto.as_view(), name='detalle_piloto'),
     path('inicio/admin/piloto/borrar/<int:pk>', BorrarPiloto.as_view(), name='borrar_piloto'),
