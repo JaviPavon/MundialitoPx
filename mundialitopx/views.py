@@ -59,3 +59,28 @@ class CrearPais(CreateView):
     template_name = "mundialitopx/admin/paises/crear.html"
     success_url = reverse_lazy("admin")
 
+# CRUD Escuderia
+class DetallesEscuderia(DetailView):
+    model = Escuderia
+    template_name = "mundialitopx/admin/escuderias/detalle.html"
+
+class BorrarEscuderia(DeleteView):
+    model = Escuderia
+    template_name = "mundialitopx/admin/escuderias/borrar.html"
+    success_url = reverse_lazy("admin")
+
+class EditarEscuderia(UpdateView):
+    model = Escuderia
+    fields = ['nombre', 'alias', 'monoplaza', 'pais', 'logo', 'puesto', 'descripcion']
+    template_name = "mundialitopx/admin/escuderias/editar.html"
+    template_name_suffix = "_update_form"
+    success_url = reverse_lazy("admin")
+    
+class CrearEscuderia(CreateView):
+    model = Escuderia
+    fields = ['nombre', 'alias', 'monoplaza', 'pais', 'logo', 'puesto', 'descripcion']
+    template_name = "mundialitopx/admin/escuderias/crear.html"
+    success_url = reverse_lazy("admin")
+
+
+
