@@ -129,3 +129,14 @@ class CrearCircuito(CreateView):
     template_name = "mundialitopx/admin/circuitos/crear.html"
     success_url = reverse_lazy("admin")
 
+
+# CRUD Carrera
+class DetallesCarrera(DetailView):
+    model = Carrera
+    template_name = "mundialitopx/admin/carreras/detalle.html"
+
+class BorrarCarrera(DeleteView):
+    model = Carrera
+    template_name = "mundialitopx/admin/carreras/borrar.html"
+    success_url = reverse_lazy("admin")
+
