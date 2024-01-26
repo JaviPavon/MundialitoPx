@@ -36,4 +36,26 @@ def circuitoAdmin(request):
 def carreraAdmin(request):
     return render(request, "mundialitopx/admin/carrera.html", {})
 
+# CRUD Pais
+class DetallesPais(DetailView):
+    model = Pais
+    template_name = "mundialitopx/admin/paises/detalle.html"
+
+class BorrarPais(DeleteView):
+    model = Pais
+    template_name = "mundialitopx/admin/paises/borrar.html"
+    success_url = reverse_lazy("admin")
+
+class EditarPais(UpdateView):
+    model = Pais
+    fields = ['nombre', 'bandera']
+    template_name = "mundialitopx/admin/paises/editar.html"
+    template_name_suffix = "_update_form"
+    success_url = reverse_lazy("admin")
+    
+class CrearPais(CreateView):
+    model = Pais
+    fields = ['nombre', 'bandera']
+    template_name = "mundialitopx/admin/paises/crear.html"
+    success_url = reverse_lazy("admin")
 
