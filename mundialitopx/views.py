@@ -47,104 +47,104 @@ def carreraAdmin(request):
 # CRUD Pais
 class DetallesPais(DetailView):
     model = Pais
-    template_name = "mundialitopx/admin/CRUD/detalle.html"
+    template_name = "mundialitopx/admin/paises/detalle.html"
 
 class BorrarPais(DeleteView):
     model = Pais
-    template_name = "mundialitopx/admin/CRUD/borrar.html"
+    template_name = "mundialitopx/admin/paises/borrar.html"
     success_url = reverse_lazy("admin")
 
 class EditarPais(UpdateView):
     model = Pais
     fields = ['nombre', 'bandera']
-    template_name = "mundialitopx/admin/CRUD/editar.html"
+    template_name = "mundialitopx/admin/paises/editar.html"
     template_name_suffix = "_update_form"
     success_url = reverse_lazy("admin")
     
 class CrearPais(CreateView):
     model = Pais
     fields = ['nombre', 'bandera']
-    template_name = "mundialitopx/admin/CRUD/crear.html"
+    template_name = "mundialitopx/admin/paises/crear.html"
     success_url = reverse_lazy("admin")
 
 # CRUD Escuderia
 class DetallesEscuderia(DetailView):
     model = Escuderia
-    template_name = "mundialitopx/admin/CRUD/detalle.html"
+    template_name = "mundialitopx/admin/escuderias/detalle.html"
 
 class BorrarEscuderia(DeleteView):
     model = Escuderia
-    template_name = "mundialitopx/admin/CRUD/borrar.html"
+    template_name = "mundialitopx/admin/escuderias/borrar.html"
     success_url = reverse_lazy("admin")
 
 class EditarEscuderia(UpdateView):
     model = Escuderia
     fields = ['nombre', 'alias', 'monoplaza', 'pais', 'logo', 'puesto', 'descripcion']
-    template_name = "mundialitopx/admin/CRUD/editar.html"
+    template_name = "mundialitopx/admin/escuderias/editar.html"
     template_name_suffix = "_update_form"
     success_url = reverse_lazy("admin")
     
 class CrearEscuderia(CreateView):
     model = Escuderia
     fields = ['nombre', 'alias', 'monoplaza', 'pais', 'logo', 'puesto', 'descripcion']
-    template_name = "mundialitopx/admin/CRUD/crear.html"
+    template_name = "mundialitopx/admin/escuderias/crear.html"
     success_url = reverse_lazy("admin")
 
 # CRUD Piloto
 class DetallesPiloto(DetailView):
     model = Piloto
-    template_name = "mundialitopx/admin/CRUD/detalle.html"
+    template_name = "mundialitopx/admin/pilotos/detalle.html"
 
 class BorrarPiloto(DeleteView):
     model = Piloto
-    template_name = "mundialitopx/admin/CRUD/borrar.html"
+    template_name = "mundialitopx/admin/pilotos/borrar.html"
     success_url = reverse_lazy("admin")
 
 class EditarPiloto(UpdateView):
     model = Piloto
     fields = ['nombre', 'dorsal', 'escuderia', 'pais', 'foto', 'puesto', 'biografia']
-    template_name = "mundialitopx/admin/CRUD/editar.html"
+    template_name = "mundialitopx/admin/pilotos/editar.html"
     template_name_suffix = "_update_form"
     success_url = reverse_lazy("admin")
     
 class CrearPiloto(CreateView):
     model = Piloto
     fields = ['nombre', 'dorsal', 'escuderia', 'pais', 'foto', 'puesto', 'biografia']
-    template_name = "mundialitopx/admin/CRUD/crear.html"
+    template_name = "mundialitopx/admin/pilotos/crear.html"
     success_url = reverse_lazy("admin")
 
 
 # CRUD Circuito
 class DetallesCircuito(DetailView):
     model = Circuito
-    template_name = "mundialitopx/admin/CRUD/detalle.html"
+    template_name = "mundialitopx/admin/circuitos/detalle.html"
 
 class BorrarCircuito(DeleteView):
     model = Circuito
-    template_name = "mundialitopx/admin/CRUD/borrar.html"
+    template_name = "mundialitopx/admin/circuitos/borrar.html"
     success_url = reverse_lazy("admin")
 
 class EditarCircuito(UpdateView):
     model = Circuito
     fields = ['nombre', 'alias', 'pista', 'pais']
-    template_name = "mundialitopx/admin/CRUD/editar.html"
+    template_name = "mundialitopx/admin/circuitos/editar.html"
     template_name_suffix = "_update_form"
     success_url = reverse_lazy("admin")
     
 class CrearCircuito(CreateView):
     model = Circuito
     fields = ['nombre', 'alias', 'pista', 'pais']
-    template_name = "mundialitopx/admin/CRUD/crear.html"
+    template_name = "mundialitopx/admin/circuitos/crear.html"
     success_url = reverse_lazy("admin")
 
 
 # CRUD Carrera
 class DetallesCarrera(DetailView):
     model = Carrera
-    template_name = "mundialitopx/admin/CRUD/detalle.html"
+    template_name = "mundialitopx/admin/carreras/detalle.html"
 
 class BorrarCarrera(DeleteView):
     model = Carrera
-    template_name = "mundialitopx/admin/CRUD/borrar.html"
+    template_name = "mundialitopx/admin/carreras/borrar.html"
     success_url = reverse_lazy("admin")
 
