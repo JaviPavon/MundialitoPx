@@ -2,12 +2,22 @@
 {% block content %}
 <div class="row p-3">
         <div class="col-4 offset-4 pt-5">
-            <div class="card cardp text-center">
+            <div class="card text-center">
                 <div class="card-body">
                     <div class="card-title">
                         <div class="row">
-                            <div class="col-12"><img height="100px"  src="{{ escuderia.foto.url}}" alt=""></div>
-                            <div class="col-12"><h2>{{ escuderia.nombre }}</h2></div>
+                            <div class="col-2"><img height="30px"  src="{{ escuderia.logo.url}}" alt=""></div>
+                            <div class="col-2 offset-3"><h2>{{ escuderia.puesto }}º</h2></div>
+                            <div class="col-2 offset-3"><img height="30px"  src="{{ escuderia.pais.bandera.url}}" alt=""></div>
+                            <div class="col-12"><h2>{{ escuderia.nombre }} - {{ escuderia.puntos }}pts</h2></div>
+                            <div class="col-12"><p>{{ escuderia.descripcion }}</p></div>
+                            <div class="col-12 "><img height="100px"  src="{{ escuderia.monoplaza.url}}" alt=""></div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col-6"><a class="btn btn-primary" href="{% url 'editar_escuderia' escuderia.pk %}">Editar</a></div>
+                            <div class="col-6"><a class="btn btn-danger" href="{% url 'borrar_escuderia' escuderia.pk %}">Borrar</a></div>
                         </div>
                     </div>
                 </div>
