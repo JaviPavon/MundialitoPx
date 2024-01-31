@@ -7,6 +7,8 @@ from django.views import View
 from .models import Piloto, Pais, Escuderia, Circuito, Carrera, Usuario
 from django.urls import reverse_lazy
 from django.db.models import Sum
+from .forms import CarreraForm
+from django.core.exceptions import ObjectDoesNotExist
 
 from django.views.generic import (
     ListView,
@@ -16,7 +18,7 @@ from django.views.generic import (
     CreateView,
 )
 
-# Menú de Admin
+# region Menú de Admin
 
 def admin(request):
     return render(request, "mundialitopx/admin/admin.html", {})
@@ -41,10 +43,28 @@ class ListCircuitos(ListView):
     template_name = "mundialitopx/admin/circuito.html"
     context_object_name = "circuitos"
 
-def carreraAdmin(request):
-    return render(request, "mundialitopx/admin/carrera.html", {})
+class ListCarreras(ListView):
+    model = Carrera
+    template_name = "mundialitopx/admin/carrera.html"
 
-# CRUD Pais
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        piloto = self.request.GET.get('piloto')
+        circuito = self.request.GET.get('circuito')
+    
+        context['circuitos'] = Circuito.objects.all()
+        context['carreras'] = Carrera.objects.all()
+        if piloto != 'todo' and piloto is not None:
+            try:
+                pilotobject = Piloto.objects.get(nombre__contains=piloto)
+                context['carreras'] = context['carreras'].filter(piloto=pilotobject)
+            except ObjectDoesNotExist:
+                pass
+        if circuito != 'todo' and circuito is not None:
+            context['carreras'] = context['carreras'].filter(circuito=circuito)
+        return context
+# endregion
+# region CRUD Pais
 class DetallesPais(DetailView):
     model = Pais
     template_name = "mundialitopx/admin/paises/detalle.html"
@@ -67,7 +87,8 @@ class CrearPais(CreateView):
     template_name = "mundialitopx/admin/paises/crear.html"
     success_url = reverse_lazy("admin")
 
-# CRUD Escuderia
+# endregion
+# region CRUD Escuderia
 class DetallesEscuderia(DetailView):
     model = Escuderia
     template_name = "mundialitopx/admin/escuderias/detalle.html"
@@ -90,7 +111,8 @@ class CrearEscuderia(CreateView):
     template_name = "mundialitopx/admin/escuderias/crear.html"
     success_url = reverse_lazy("admin")
 
-# CRUD Piloto
+# endregion
+# region CRUD Piloto
 class DetallesPiloto(DetailView):
     model = Piloto
     template_name = "mundialitopx/admin/pilotos/detalle.html"
@@ -113,8 +135,8 @@ class CrearPiloto(CreateView):
     template_name = "mundialitopx/admin/pilotos/crear.html"
     success_url = reverse_lazy("admin")
 
-
-# CRUD Circuito
+# endregion
+# region CRUD Circuito
 class DetallesCircuito(DetailView):
     model = Circuito
     template_name = "mundialitopx/admin/circuitos/detalle.html"
@@ -137,8 +159,8 @@ class CrearCircuito(CreateView):
     template_name = "mundialitopx/admin/circuitos/crear.html"
     success_url = reverse_lazy("admin")
 
-
-# CRUD Carrera
+# endregion
+# region CRUD Carrera
 class DetallesCarrera(DetailView):
     model = Carrera
     template_name = "mundialitopx/admin/carreras/detalle.html"
@@ -148,3 +170,56 @@ class BorrarCarrera(DeleteView):
     template_name = "mundialitopx/admin/carreras/borrar.html"
     success_url = reverse_lazy("admin")
 
+class CrearCarrera(CreateView):
+    nombre_template = "mundialitopx/admin/carreras/crear.html"
+    fields = ['piloto', 'circuito', 'puesto']
+    def get(self, request):
+        pilotos = Piloto.objects.all()
+        circuitos = Circuito.objects.all()
+        return render(request, self.nombre_template, {'circuitos': circuitos, 'pilotos': pilotos})
+
+    def post(self, request):
+        form = CarreraForm(request.POST)
+        if form.is_valid():
+            puesto = form.cleaned_data["puesto"]
+            pilotoform = form.cleaned_data["piloto"]
+            circuito = form.cleaned_data["circuito"]
+            piloto = Piloto.objects.get(nombre=pilotoform)
+            escuderia = piloto.escuderia
+            carrera = form.save(commit=False)
+            if puesto == 1:
+                puntos = 25
+            elif puesto == 2:
+                puntos = 18
+            elif puesto == 3:
+                puntos = 15
+            elif puesto == 4:
+                puntos = 10
+            elif puesto == 5:
+                puntos = 8
+            elif puesto == 6:
+                puntos = 6
+            elif puesto == 7:
+                puntos = 5
+            elif puesto == 8:
+                puntos = 3
+            elif puesto == 9:
+                puntos = 2
+            elif puesto == 10:
+                puntos = 1
+            else:
+                puntos = 0
+            carrera.puesto = puesto
+            carrera.puntos = puntos
+            carrera.piloto = pilotoform
+            carrera.circuito = circuito
+            carrera.save()
+
+            piloto.puntos += puntos
+            piloto.save()
+            escuderia.puntos += puntos
+            escuderia.save()
+
+        return redirect('carrera')
+
+# endregion

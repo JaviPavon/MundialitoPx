@@ -1,0 +1,64 @@
+{% extends 'mundialitopx/base.html' %}
+
+{% block content %}
+	<div class="row pt-5">
+
+        <form action="" class="d-flex" role="search">
+            {% csrf_token %}
+            <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search" name="piloto">
+            <select name="circuito" id="circuito">
+                <option value="todo">...........</option>
+                {% for circuito in circuitos %}
+                    <option value="{{ circuito.id }}">{{ circuito.nombre }}</option>
+                {% endfor %}
+            </select>
+            <button class="btn btn-outline-success" type="submit">Buscar</button>
+        </form>
+
+
+		<h2>Gestión de Carreras</h2>
+	</div>
+	<div class="row pt-5 justify-content-center grid gap-5">
+		
+		<div class=" card-menu col-2">
+			<a href="{% url 'crear_carrera' %}">
+				<div class="cardp mcard card shadow w-100 h-100">
+					<div class="row pt-5">
+						<div class="col">
+							<i class=" plus bi bi-plus-circle-fill"></i>
+						</div>
+					</div>
+					<div class="row text-center">
+						<div class="col pt-3">
+							<p>Crear una Carrera</p>
+						</div>
+					</div>
+				</div>
+			</a>
+		</div>
+
+        <div class="row">
+            {% for carrera in carreras %}
+
+        <div class="col-3">
+            <a href="{% url 'detalle_carrera' carrera.id %}">
+            <div class="card cardp text-center">
+                <div class="card-body">
+                    <div class="card-title">
+                        <div class="row">
+                            <div class="col-12"><img height="100px"  src="{{ carrera.circuito.pista.url}}" alt=""></div>
+                            <div class="col-12"><h2>{{ carrera.piloto.nombre }}</h2></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </a>
+        </div>
+    
+
+
+{% endfor %}
+        </div>
+		
+	</div>
+{% endblock %}

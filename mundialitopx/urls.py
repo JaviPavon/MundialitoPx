@@ -7,6 +7,7 @@ from .views import (
     ListPaises, 
     ListCircuitos, 
     ListEscuderias, 
+    ListCarreras, 
 
     DetallesPais, 
     CrearPais, 
@@ -29,6 +30,7 @@ from .views import (
     BorrarCircuito, 
 
     DetallesCarrera, 
+    CrearCarrera, 
     BorrarCarrera, 
 )
 
@@ -36,9 +38,9 @@ urlpatterns = [
     path('', staff_member_required(views.admin), name='admin'),
     path('inicio/admin/piloto', staff_member_required(ListPilotos.as_view()), name='piloto'),
     path('inicio/admin/pais', staff_member_required(ListPaises.as_view()), name='pais'),
-    path('inicio/admin/ecuderia', staff_member_required(ListEscuderias.as_view()), name='escuderia'),
+    path('inicio/admin/escuderia', staff_member_required(ListEscuderias.as_view()), name='escuderia'),
     path('inicio/admin/circuito', staff_member_required(ListCircuitos.as_view()), name='circuito'),
-    path('inicio/admin/carrera', staff_member_required(views.carreraAdmin), name='carrera'),
+    path('inicio/admin/carrera', staff_member_required(ListCarreras.as_view()), name='carrera'),
 
     path('inicio/admin/pais/detalle/<int:pk>', DetallesPais.as_view(), name='detalle_pais'),
     path('inicio/admin/pais/borrar/<int:pk>', BorrarPais.as_view(), name='borrar_pais'),
@@ -62,5 +64,6 @@ urlpatterns = [
 
     path('inicio/admin/carrera/detalle/<int:pk>', DetallesCarrera.as_view(), name='detalle_carrera'),
     path('inicio/admin/carrera/borrar/<int:pk>', BorrarCarrera.as_view(), name='borrar_carrera'),
+    path('inicio/admin/carrera/crear', CrearCarrera.as_view(), name='crear_carrera'),
 
 ]

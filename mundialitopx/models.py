@@ -14,7 +14,7 @@ class Usuario(AbstractUser):
 
 class Pais(models.Model):
     nombre = models.CharField(max_length=100)
-    bandera = models.ImageField(upload_to='banderas/', null=True, blank=True)
+    bandera = models.ImageField(upload_to='media/banderas/', null=True, blank=True)
 
     def __str__(self):
         return self.nombre
@@ -26,7 +26,7 @@ class Pais(models.Model):
 class Circuito(models.Model):
     nombre = models.CharField(max_length=100)
     alias = models.CharField(max_length=100)
-    pista = models.ImageField(upload_to='circuitos/', null=True, blank=True)
+    pista = models.ImageField(upload_to='media/circuitos/', null=True, blank=True)
     pais = models.ForeignKey(Pais, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -35,9 +35,9 @@ class Circuito(models.Model):
 class Escuderia(models.Model):
     nombre = models.CharField(max_length=100)
     alias = models.CharField(max_length=100)
-    monoplaza = models.ImageField(upload_to='monoplazas/', null=True, blank=True)
+    monoplaza = models.ImageField(upload_to='media/monoplazas/', null=True, blank=True)
     pais = models.ForeignKey(Pais, on_delete=models.CASCADE)
-    logo = models.ImageField(upload_to='logos/', null=True, blank=True)
+    logo = models.ImageField(upload_to='media/logos/', null=True, blank=True)
     puesto = models.IntegerField(validators=[MinValueValidator(1),MaxValueValidator(20)])
     descripcion = models.TextField()
     puntos = models.IntegerField(default=0)
@@ -53,7 +53,7 @@ class Piloto(models.Model):
     escuderia = models.ForeignKey(Escuderia, on_delete=models.CASCADE)
     puesto = models.IntegerField(validators=[MinValueValidator(1),MaxValueValidator(20)])
     biografia = models.TextField()
-    foto = models.ImageField(upload_to='fotospilotos/', null=True, blank=True)
+    foto = models.ImageField(upload_to='media/fotospilotos/', null=True, blank=True)
 
     def __str__(self):
         return self.nombre
