@@ -166,6 +166,27 @@ class BorrarCarrera(DeleteView):
     model = Carrera
     template_name = "mundialitopx/admin/carreras/borrar.html"
     success_url = reverse_lazy("admin")
+    
+
+    def post(self, request, pk):
+
+
+        carrera = Carrera.objects.get(pk=pk)
+        piloto = carrera.piloto
+        escuderia = piloto.escuderia
+
+        piloto.puntos -= carrera.puntos
+        piloto.save()
+
+        escuderia.puntos -= carrera.puntos
+        escuderia.save()
+
+        carrera.delete()
+
+        return redirect('carrera')
+    
+
+
 
 class CrearCarrera(CreateView):
     nombre_template = "mundialitopx/admin/carreras/crear.html"
@@ -183,7 +204,7 @@ class CrearCarrera(CreateView):
             circuito = form.cleaned_data["circuito"]
             piloto = Piloto.objects.get(nombre=pilotoform)
             escuderia = piloto.escuderia
-            carrera = Carrera.objects.all()
+            carrera = form.save(commit=False)
             if puesto == 1:
                 puntos = 25
             elif puesto == 2:
@@ -227,47 +248,46 @@ class EditarCarrera(UpdateView):
     success_url = reverse_lazy("admin")
 
     def post(self, request, pk):
-        form = CarreraForm(request.POST)
-        if form.is_valid():
-            puesto = form.cleaned_data["puesto"]
-            carrera = Carrera.objects.get(pk=pk)
-            piloto = carrera.piloto
-            escuderia = piloto.escuderia
 
-            if puesto == 1:
-                puntos = 25
-            elif puesto == 2:
-                puntos = 18
-            elif puesto == 3:
-                puntos = 15
-            elif puesto == 4:
-                puntos = 10
-            elif puesto == 5:
-                puntos = 8
-            elif puesto == 6:
-                puntos = 6
-            elif puesto == 7:
-                puntos = 5
-            elif puesto == 8:
-                puntos = 3
-            elif puesto == 9:
-                puntos = 2
-            elif puesto == 10:
-                puntos = 1
-            else:
-                puntos = 0
+        puesto = int(request.POST.get("puesto"))
+        carrera = Carrera.objects.get(pk=pk)
+        piloto = carrera.piloto
+        escuderia = piloto.escuderia
 
-            piloto.puntos -= carrera.puntos
-            piloto.puntos += puntos
-            piloto.save()
+        if puesto == 1:
+            puntos = 25
+        elif puesto == 2:
+            puntos = 18
+        elif puesto == 3:
+            puntos = 15
+        elif puesto == 4:
+            puntos = 10
+        elif puesto == 5:
+            puntos = 8
+        elif puesto == 6:
+            puntos = 6
+        elif puesto == 7:
+            puntos = 5
+        elif puesto == 8:
+            puntos = 3
+        elif puesto == 9:
+            puntos = 2
+        elif puesto == 10:
+            puntos = 1
+        else:
+            puntos = 0
 
-            escuderia.puntos -= carrera.puntos
-            escuderia.puntos += puntos
-            escuderia.save()
+        piloto.puntos -= carrera.puntos
+        piloto.puntos += puntos
+        piloto.save()
 
-            carrera.puesto = puesto
-            carrera.puntos = puntos
-            carrera.save()
+        escuderia.puntos -= carrera.puntos
+        escuderia.puntos += puntos
+        escuderia.save()
+
+        carrera.puesto = puesto
+        carrera.puntos = puntos
+        carrera.save()
 
             
 
