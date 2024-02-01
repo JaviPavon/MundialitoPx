@@ -190,11 +190,11 @@ class BorrarCarrera(DeleteView):
 
 class CrearCarrera(CreateView):
     nombre_template = "mundialitopx/admin/carreras/crear.html"
-    fields = ['piloto', 'circuito', 'puesto']
     def get(self, request):
+        form = CarreraForm()
         pilotos = Piloto.objects.all()
         circuitos = Circuito.objects.all()
-        return render(request, self.nombre_template, {'circuitos': circuitos, 'pilotos': pilotos})
+        return render(request, self.nombre_template, {'form':form, 'circuitos': circuitos, 'pilotos': pilotos})
 
     def post(self, request):
         form = CarreraForm(request.POST)
@@ -202,6 +202,7 @@ class CrearCarrera(CreateView):
             puesto = form.cleaned_data["puesto"]
             pilotoform = form.cleaned_data["piloto"]
             circuito = form.cleaned_data["circuito"]
+            vuelta_rapida = form.cleaned_data["vuelta_rapida"]
             piloto = Piloto.objects.get(nombre=pilotoform)
             escuderia = piloto.escuderia
             carrera = form.save(commit=False)
@@ -227,6 +228,10 @@ class CrearCarrera(CreateView):
                 puntos = 1
             else:
                 puntos = 0
+
+            if vuelta_rapida:
+                puntos += 1
+            
             carrera.puesto = puesto
             carrera.puntos = puntos
             carrera.piloto = pilotoform
@@ -242,13 +247,13 @@ class CrearCarrera(CreateView):
 
 class EditarCarrera(UpdateView):
     model = Carrera
-    fields = ['piloto', 'circuito', 'puesto']
+    fields = ['piloto', 'circuito', 'puesto', 'estado', 'vuelta_rapida']
     template_name = "mundialitopx/admin/carreras/editar.html"
     template_name_suffix = "_update_form"
     success_url = reverse_lazy("admin")
 
     def post(self, request, pk):
-
+        vuelta_rapida = request.POST.get("vuelta_rapida")
         puesto = int(request.POST.get("puesto"))
         carrera = Carrera.objects.get(pk=pk)
         piloto = carrera.piloto
@@ -276,6 +281,9 @@ class EditarCarrera(UpdateView):
             puntos = 1
         else:
             puntos = 0
+
+        if vuelta_rapida:
+                puntos += 1
 
         piloto.puntos -= carrera.puntos
         piloto.puntos += puntos

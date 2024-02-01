@@ -60,10 +60,17 @@ class Piloto(models.Model):
 
 
 class Carrera(models.Model):
+    estado = [('DSQ', 'DSQ'),('DNF', 'DNF'),]
+
     circuito = models.ForeignKey(Circuito, on_delete=models.CASCADE)
-    puesto = models.IntegerField(validators=[MinValueValidator(1),MaxValueValidator(20)])
+    puesto = models.IntegerField(validators=[MinValueValidator(1),MaxValueValidator(20)], null=True, blank=True)
     piloto = models.ForeignKey(Piloto, on_delete=models.CASCADE)
     puntos = models.IntegerField(default=0)
+    vuelta_rapida = models.BooleanField(default=False)
+    estado = models.CharField(max_length=3, choices=estado, null=True, blank=True)
+
+
+
 
     def __str__(self):
         return str(self.piloto)+ " en " + str(self.circuito)

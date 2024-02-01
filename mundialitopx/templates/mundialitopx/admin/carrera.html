@@ -47,7 +47,7 @@
                     <div class="card-title">
                         <div class="row">
                             <div class="col-12"><img height="100px"  src="{{ carrera.circuito.pista.url}}" alt=""></div>
-                            <div class="col-12"><h2>{{ carrera.piloto.nombre }} {{ carrera.puesto }}º-{{ carrera.puntos }}</h2></div>
+                            <div class="col-12"><h2>{{ carrera.piloto.nombre }} {% if carrera.puesto == None %} {{ carrera.estado }} {% else %} {{ carrera.puesto }}º {% endif %}-{{ carrera.puntos }}</h2></div>
                         </div>
                     </div>
                 </div>

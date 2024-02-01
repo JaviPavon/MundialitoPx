@@ -13,28 +13,8 @@
                                     <div class="col-12 ">
                                         <div class="form-group">
 
-                                                
-                                            <label for="piloto" class="form-label">Piloto</label>
-                                            <select name="piloto" id="piloto">
-                                                <option value="todo">...........</option>
-                                                {% for piloto in pilotos %}
-                                                    <option value="{{ piloto.id }}">{{ piloto.nombre }}</option>
-                                                {% endfor %}
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="codigo" class="form-label">Circuito</label>
-                                            <select name="circuito" id="circuito">
-                                                <option value="todo">...........</option>
-                                                {% for circuito in circuitos %}
-                                                    <option value="{{ circuito.id }}">{{ circuito.nombre }}</option>
-                                                {% endfor %}
-                                            </select>                                                
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="codigo" class="form-label">Puesto</label>
-                                            <input type="number" name="puesto" id="puesto">                                              
-                                        </div>
+                                            {% csrf_token %}
+                                            {{ form.as_p }}
 
                                     </div>
                                     <div class="pt-3 col-12">
