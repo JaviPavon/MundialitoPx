@@ -77,3 +77,17 @@ class Carrera(models.Model):
 
     class Meta:
         unique_together= ['circuito','piloto']
+
+
+class Noticia(models.Model):
+    autor = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    titulo = models.CharField(max_length=100)
+    cuerpo = models.TextField()
+    fecha_publicacion = models.DateField()
+    imagen = models.ImageField(upload_to='media/noticia/', null=True, blank=True)
+
+
+
+
+    def __str__(self):
+        return "'" + str(self.titulo)+ "' escrito por " + str(self.autor)
