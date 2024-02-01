@@ -2,7 +2,8 @@ import datetime
 from typing import Any
 from django.db.models.query import QuerySet
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import redirect, render
+from django.http import HttpRequest, HttpResponse
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
 from .models import Piloto, Pais, Escuderia, Circuito, Carrera, Usuario
 from django.urls import reverse_lazy
@@ -49,19 +50,15 @@ class ListCarreras(ListView):
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        piloto = self.request.GET.get('piloto')
-        circuito = self.request.GET.get('circuito')
-    
-        context['circuitos'] = Circuito.objects.all()
-        context['carreras'] = Carrera.objects.all()
-        if piloto != 'todo' and piloto is not None:
-            try:
-                pilotobject = Piloto.objects.get(nombre__contains=piloto)
-                context['carreras'] = context['carreras'].filter(piloto=pilotobject)
-            except ObjectDoesNotExist:
-                pass
-        if circuito != 'todo' and circuito is not None:
-            context['carreras'] = context['carreras'].filter(circuito=circuito)
+        piloto = self.request.GET.get("piloto")
+        circuito = self.request.GET.get("circuito")
+
+        context["circuitos"] = Circuito.objects.all()
+        context["carreras"] = Carrera.objects.all()
+        if piloto != "todo" and piloto != None:
+            context["carreras"] = context["carreras"].filter(piloto__nombre__contains=piloto)
+        if circuito != "todo" and circuito != None:
+            context["carreras"] = context["carreras"].filter(circuito=circuito)
         return context
 # endregion
 # region CRUD Pais
@@ -186,7 +183,7 @@ class CrearCarrera(CreateView):
             circuito = form.cleaned_data["circuito"]
             piloto = Piloto.objects.get(nombre=pilotoform)
             escuderia = piloto.escuderia
-            carrera = form.save(commit=False)
+            carrera = Carrera.objects.all()
             if puesto == 1:
                 puntos = 25
             elif puesto == 2:
@@ -222,4 +219,58 @@ class CrearCarrera(CreateView):
 
         return redirect('carrera')
 
+class EditarCarrera(UpdateView):
+    model = Carrera
+    fields = ['piloto', 'circuito', 'puesto']
+    template_name = "mundialitopx/admin/carreras/editar.html"
+    template_name_suffix = "_update_form"
+    success_url = reverse_lazy("admin")
+
+    def post(self, request, pk):
+        form = CarreraForm(request.POST)
+        if form.is_valid():
+            puesto = form.cleaned_data["puesto"]
+            carrera = Carrera.objects.get(pk=pk)
+            piloto = carrera.piloto
+            escuderia = piloto.escuderia
+
+            if puesto == 1:
+                puntos = 25
+            elif puesto == 2:
+                puntos = 18
+            elif puesto == 3:
+                puntos = 15
+            elif puesto == 4:
+                puntos = 10
+            elif puesto == 5:
+                puntos = 8
+            elif puesto == 6:
+                puntos = 6
+            elif puesto == 7:
+                puntos = 5
+            elif puesto == 8:
+                puntos = 3
+            elif puesto == 9:
+                puntos = 2
+            elif puesto == 10:
+                puntos = 1
+            else:
+                puntos = 0
+
+            piloto.puntos -= carrera.puntos
+            piloto.puntos += puntos
+            piloto.save()
+
+            escuderia.puntos -= carrera.puntos
+            escuderia.puntos += puntos
+            escuderia.save()
+
+            carrera.puesto = puesto
+            carrera.puntos = puntos
+            carrera.save()
+
+            
+
+        return redirect('carrera')
+    
 # endregion

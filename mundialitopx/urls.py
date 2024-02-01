@@ -31,6 +31,7 @@ from .views import (
 
     DetallesCarrera, 
     CrearCarrera, 
+    EditarCarrera, 
     BorrarCarrera, 
 )
 
@@ -65,5 +66,6 @@ urlpatterns = [
     path('inicio/admin/carrera/detalle/<int:pk>', DetallesCarrera.as_view(), name='detalle_carrera'),
     path('inicio/admin/carrera/borrar/<int:pk>', BorrarCarrera.as_view(), name='borrar_carrera'),
     path('inicio/admin/carrera/crear', CrearCarrera.as_view(), name='crear_carrera'),
+    path('inicio/admin/carrera/editar/<int:pk>', EditarCarrera.as_view(), name='editar_carrera'),
 
 ]

@@ -1,0 +1,25 @@
+{% extends 'mundialitopx/base.html' %}
+{% block content %}
+<div class="row p-3">
+        <div class="col-4 offset-4 pt-5">
+            <div class="card text-center">
+                <div class="card-body">
+                    <div class="card-title">
+                        <div class="row">
+                            <div class="col-12"><img height="100px"  src="{{ carrera.circuito.pista.url}}" alt=""></div>
+                            <div class="col-12"><h2>{{ carrera.puesto }}º-{{ carrera.piloto.nombre }}</h2></div>
+                            <div class="col-12"><p>Puntos obtenidos: {{ carrera.puntos }}</p></div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col-6"><a class="btn btn-primary" href="{% url 'editar_carrera' carrera.pk %}">Editar</a></div>
+                            <div class="col-6"><a class="btn btn-danger" href="{% url 'borrar_carrera' carrera.pk %}">Borrar</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+</div>
+{% endblock %}
