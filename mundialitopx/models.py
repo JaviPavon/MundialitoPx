@@ -91,3 +91,16 @@ class Noticia(models.Model):
 
     def __str__(self):
         return "'" + str(self.titulo)+ "' escrito por " + str(self.autor)
+    
+class Comentario(models.Model):
+    autor = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    noticia = models.ForeignKey(Noticia, on_delete=models.CASCADE)
+    comentario = models.TextField()
+    fecha_publicacion = models.DateField()
+    
+
+
+
+
+    def __str__(self):
+        return "'" + str(self.comentario)+ "' escrito por " + str(self.autor) + " de " + str(self.noticia)
