@@ -10,8 +10,15 @@ class CarreraForm(forms.ModelForm):
 
 
 class RegisterForm(UserCreationForm):
-  email = forms.EmailField()
+    email = forms.EmailField()
 
-  class Meta:
-    model = Usuario
-    fields = ["username", "email", "password1", "password2"]
+    class Meta:
+        model = Usuario
+        fields = [
+            "username",
+            "first_name",
+            "last_name",
+            "email",
+            "password1",
+            "password2",
+        ]
