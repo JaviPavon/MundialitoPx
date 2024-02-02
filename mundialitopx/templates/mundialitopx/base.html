@@ -17,10 +17,14 @@
                             <h1><a href="/">Administración</a></h1>
                         </div>
                         {% if user.is_authenticated %}
-                        <div class="col-2"><a href="{% url 'logout' %}" class="top-menu"><i class="plus bi bi-door-closed">Cerrar Sesión</i></a>
+                        <div class="col-2 align-items-center d-flex"><a href="{% url 'logout' %}" class="btn btn-danger">
+                                <p class="my-0 text-white">Cerrar Sesión</p>
+                            </a>
                         </div>
                         {% else %}
-                        <div class="col-2"><a href="{% url 'login' %}" class="top-menu"><i class="plus bi bi-fingerprint">Iniciar Sesión</i></a>
+                        <div class="col-2 align-items-center d-flex"><a href="{% url 'login' %}" class="btn btn-primary">
+                                <p class="my-0 text-white">Iniciar Sesión</p>
+                            </a>
                         </div>
                         {% endif %}
                     </div>    
