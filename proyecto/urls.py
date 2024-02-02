@@ -18,11 +18,13 @@ from django.contrib import admin
 from django.urls import include, path
 from django.conf import settings
 from django.conf.urls.static import static
-
+from mundialitopx import views as v
+ 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include("mundialitopx.urls")),
     path('accounts/', include("django.contrib.auth.urls")),
+    path('register/', v.register, name="register"),
 ]
 
 

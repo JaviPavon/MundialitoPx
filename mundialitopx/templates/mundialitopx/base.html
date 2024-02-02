@@ -13,7 +13,7 @@
             <div class="col-12">
                 <div class="page-header">
                     <div class="row">
-                        <div class="col-10">
+                        <div class="col-8">
                             <h1><a href="/">Administración</a></h1>
                         </div>
                         {% if user.is_authenticated %}
@@ -21,9 +21,16 @@
                                 <p class="my-0 text-white">Cerrar Sesión</p>
                             </a>
                         </div>
+                        <div class="col-2 align-items-center d-flex">
+                            <p class="my-0 text-white">Bienvenido, {{ request.user.username }}</p>
+                        </div>
                         {% else %}
                         <div class="col-2 align-items-center d-flex"><a href="{% url 'login' %}" class="btn btn-primary">
                                 <p class="my-0 text-white">Iniciar Sesión</p>
+                            </a>
+                        </div>
+                        <div class="col-2 align-items-center d-flex"><a href="{% url 'register' %}" class="btn btn-primary">
+                                <p class="my-0 text-white">Registrarse</p>
                             </a>
                         </div>
                         {% endif %}
