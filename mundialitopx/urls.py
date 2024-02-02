@@ -36,7 +36,7 @@ from .views import (
 )
 
 urlpatterns = [
-    path('', staff_member_required(views.admin), name='admin'),
+    path('', views.admin, name='admin'),
     path('inicio/admin/piloto', staff_member_required(ListPilotos.as_view()), name='piloto'),
     path('inicio/admin/pais', staff_member_required(ListPaises.as_view()), name='pais'),
     path('inicio/admin/escuderia', staff_member_required(ListEscuderias.as_view()), name='escuderia'),
