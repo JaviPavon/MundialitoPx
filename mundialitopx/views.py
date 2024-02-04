@@ -179,7 +179,7 @@ class BorrarCircuito(DeleteView):
 
 class EditarCircuito(UpdateView):
     model = Circuito
-    fields = ["nombre", "alias", "pista", "pais"]
+    fields = ["nombre", "alias", "pista", "pais","silueta"]
     template_name = "mundialitopx/admin/circuitos/editar.html"
     template_name_suffix = "_update_form"
     success_url = reverse_lazy("admin")
@@ -187,7 +187,7 @@ class EditarCircuito(UpdateView):
 
 class CrearCircuito(CreateView):
     model = Circuito
-    fields = ["nombre", "alias", "pista", "pais"]
+    fields = ["nombre", "alias", "pista", "pais","silueta"]
     template_name = "mundialitopx/admin/circuitos/crear.html"
     success_url = reverse_lazy("admin")
 

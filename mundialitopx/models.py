@@ -7,6 +7,7 @@ from django.contrib.auth.models import AbstractUser
 from django.core.validators import MaxValueValidator,MinValueValidator
 
 class Usuario(AbstractUser):
+    fotoperfil = models.ImageField(upload_to='media/foto-perfil/', null=True, blank=True)
 
     def __str__(self):
         return self.username
@@ -27,7 +28,9 @@ class Circuito(models.Model):
     nombre = models.CharField(max_length=100)
     alias = models.CharField(max_length=100)
     pista = models.ImageField(upload_to='media/circuitos/', null=True, blank=True)
+    silueta = models.ImageField(upload_to='media/silueta/', null=True, blank=True)
     pais = models.ForeignKey(Pais, on_delete=models.CASCADE)
+    fecha = models.DateTimeField()
 
     def __str__(self):
         return self.nombre
@@ -82,6 +85,8 @@ class Carrera(models.Model):
 class Noticia(models.Model):
 
     circuito = models.ForeignKey(Circuito, on_delete=models.CASCADE, null=True, blank=True)
+    escuderia = models.ManyToManyField(Escuderia, blank=True)
+    piloto = models.ManyToManyField(Piloto, blank=True)
     autor = models.ForeignKey(Usuario, on_delete=models.CASCADE)
     titulo = models.CharField(max_length=100)
     cuerpo = models.TextField()
