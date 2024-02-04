@@ -80,6 +80,8 @@ class Carrera(models.Model):
 
 
 class Noticia(models.Model):
+
+    circuito = models.ForeignKey(Circuito, on_delete=models.CASCADE, null=True, blank=True)
     autor = models.ForeignKey(Usuario, on_delete=models.CASCADE)
     titulo = models.CharField(max_length=100)
     cuerpo = models.TextField()

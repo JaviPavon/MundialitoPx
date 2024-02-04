@@ -291,6 +291,7 @@ class EditarCarrera(UpdateView):
     success_url = reverse_lazy("admin")
 
     def post(self, request, pk):
+        puntos = 0
         vuelta_rapida = request.POST.get("vuelta_rapida")
         puesto = int(request.POST.get("puesto"))
         carrera = Carrera.objects.get(pk=pk)
