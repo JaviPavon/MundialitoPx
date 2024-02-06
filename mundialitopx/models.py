@@ -30,7 +30,7 @@ class Circuito(models.Model):
     pista = models.ImageField(upload_to='media/circuitos/', null=True, blank=True)
     silueta = models.ImageField(upload_to='media/silueta/', null=True, blank=True)
     pais = models.ForeignKey(Pais, on_delete=models.CASCADE)
-    fecha = models.DateTimeField()
+    fecha = models.DateField( null=True, blank=True)
 
     def __str__(self):
         return self.nombre
