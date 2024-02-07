@@ -1,11 +1,35 @@
+@font-face {
+    font-family: 'f1-bold';
+    src: url('../../../media/F1-Fuentes/Formula1-Bold.otf') format('truetype');
+    font-style: normal;
+    font-weight: normal;
+}
+@font-face {
+    font-family: 'f1-regular';
+    src: url('../../../media/F1-Fuentes/Formula1-Regular.otf') format('truetype');
+    font-style: normal;
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: 'f1-wide';
+    src: url('../../../media/F1-Fuentes/Formula1-Wide.otf') format('truetype');
+    font-style: normal;
+    font-weight: normal;
+}
+
+
+body {
+    background-color: #F7F4F1;
+}
 
 h1 a, h2 a, h2 {
-    color: #260064;
-    font-family: 'Lobster';
+    color: #15151E;
+    font-family: 'f1-bold';
 }
 
 .page-header {
-    background-color: #260064 ;
+    background-color: #15151E ;
     margin-top: 0;
     padding: 20px;
 }
@@ -21,18 +45,25 @@ a{
     text-decoration: none;
 }
 
+.a-banner {
+    color: #15151E;
+}
+
+.a-banner:hover {
+    color: #FF1E00;
+}
 .card-menu{
     height: 200px;
 }
 
 .mcard p{
     font-size: 20px;
-    color: #260064;
+    color: #15151E;
 }
 
 .mcard{
-    border: #260064;
-    background-color: #260064;
+    border: #15151E;
+    background-color: #15151E;
     transition: color 1s ease-in-out;
 }
 .mcard:hover p{
@@ -41,7 +72,10 @@ a{
 }
 
 p{
-    font-family: 'Lobster';
+    font-family: 'f1-regular';
+}
+a{
+    font-family: 'f1-regular';
 }
 .plus{
     font-size: 50px;
@@ -55,3 +89,12 @@ p{
 .cardp:hover {
     transform: translate(0%, -15%);
 }
+
+.menu {
+    background-color: #F7F4F1;
+}
+
+.inicio-escudo {
+    background-color: #15151E;
+}
+

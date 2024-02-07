@@ -18,6 +18,13 @@ from django.views.generic import (
     CreateView,
 )
 
+# region Página Principal
+
+def home(request):
+    return render(request, "mundialitopx/main/home.html", {})
+
+# endregion
+
 # region Menú de Admin
 
 
