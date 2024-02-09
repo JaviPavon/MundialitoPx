@@ -160,3 +160,17 @@ class Jornada(models.Model):
     def __str__(self):
         return str(self.piloto.piloto.nombre) + " en " + str(self.circuito.nombre) + ": "+ self.puntos_jornada 
     
+
+class Jugador(models.Model):
+
+    piloto = models.ManyToManyField(PilotoJuego)
+    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    liga = models.ForeignKey(Liga, on_delete=models.CASCADE)
+    saldo = models.IntegerField(default=1500000)
+    puntos_totales = models.IntegerField(default=0)
+    puesto = models.IntegerField(validators=[MinValueValidator(1)], null=True, blank=True)
+
+
+    def __str__(self):
+        return str(self.usuario.username) + " en " + str(self.liga.nombre)
+    
