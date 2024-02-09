@@ -127,3 +127,15 @@ class Liga(models.Model):
 
     def __str__(self):
         return str(self.nombre)
+    
+class PilotoJuego(models.Model):
+
+    piloto = models.ForeignKey(Piloto, on_delete=models.CASCADE)
+    puntos_totales = models.IntegerField(default=0)
+    valor = models.IntegerField(default=0)
+
+
+
+
+    def __str__(self):
+        return str(self.piloto.nombre)
