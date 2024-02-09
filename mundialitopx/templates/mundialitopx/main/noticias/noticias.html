@@ -1,0 +1,45 @@
+{% extends 'mundialitopx/main/base.html' %}
+
+{% block content %}
+	<div class="row g-0">
+		<div class="inicio-escudo col">
+            <img src="../../../../media/Escudo_Paxangars_rojo.png" alt="">
+        </div>
+	</div>
+    {% for noticia in noticias %}
+
+    <div class="row pt-5 g-0">
+        <div class="col-3">
+            <img height="100%"  src="{{ noticia.imagen.url}}" alt="">
+        </div>
+        <div class="col-9">
+            <div class="row">
+                <div class="col-12">
+                    <h2>{{ noticia.titulo }}</h2>
+                </div>
+                <div class="col-3">
+                    {{ noticia.autor }}
+                </div>
+                <div class="col-3">
+                    {{ noticia.fecha_publicacion }}
+                </div>
+                {% if noticia.circuito is notnull %}
+                    <div class="col-2">{{ noticia.circuito }}</div>
+                {% endif %}
+
+                {% if noticia.escuderia is notnull %}
+                    <div class="col-2">{{ noticia.escuderia }}</div>
+                {% endif %}
+
+                {% if noticia.piloto is notnull %}
+                    <div class="col-2">{{ noticia.piloto }}</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+
+
+    {% endfor %}
+ 
+{% endblock %}
