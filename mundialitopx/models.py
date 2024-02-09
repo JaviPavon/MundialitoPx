@@ -111,3 +111,19 @@ class Comentario(models.Model):
 
     def __str__(self):
         return "'" + str(self.comentario)+ "' escrito por " + str(self.autor) + " de " + str(self.noticia)
+
+
+
+class Liga(models.Model):
+    estado = [('Privado', 'Privado'),('Publico', 'Publico'),]
+
+    usuarios = models.ManyToManyField(Usuario)
+    nombre = models.CharField(max_length=30)
+    contraseña = models.CharField(max_length=15)
+    estado = models.CharField(max_length=7, choices=estado, null=True, blank=True)
+
+
+
+
+    def __str__(self):
+        return str(self.nombre)
