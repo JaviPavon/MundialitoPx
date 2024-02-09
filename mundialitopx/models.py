@@ -139,3 +139,24 @@ class PilotoJuego(models.Model):
 
     def __str__(self):
         return str(self.piloto.nombre)
+    
+
+class Jornada(models.Model):
+
+    estado = [('DSQ', 'DSQ'),('DNF', 'DNF'),]
+
+    piloto = models.ForeignKey(PilotoJuego, on_delete=models.CASCADE)
+    circuito = models.ForeignKey(Circuito, on_delete=models.CASCADE)
+    puntos_jornada = models.IntegerField(default=0)
+    adelantamiento = models.IntegerField(default=0)
+    estado = models.CharField(max_length=3, choices=estado, null=True, blank=True)
+    q2 = models.BooleanField(default=False)
+    q3 = models.BooleanField(default=False)
+    vuelta_rapida = models.BooleanField(default=False)
+    amonestacion = models.IntegerField(default=0)
+    sancion3 = models.IntegerField(default=0)
+    sancion5 = models.IntegerField(default=0)
+
+    def __str__(self):
+        return str(self.piloto.piloto.nombre) + " en " + str(self.circuito.nombre) + ": "+ self.puntos_jornada 
+    
