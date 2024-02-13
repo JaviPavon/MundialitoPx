@@ -11,48 +11,65 @@
 
 <div class="row pt-5 g-0 d-flex justify-content-center">
     <div class="col-8">
-        <div class="card">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-3">
-                            <img class="img-fluid" src="{{ noticia.imagen.url}}" alt="">
-                            </div>
-                            <div class="col-9">
-                                <div class="row grid grid-5">
-                                    <div class="col-12">
-                                        <h2>{{ noticia.titulo }}</h2>
-                                    </div>
-                                    <div class="col-3">
-                                        {{ noticia.autor }}
-                                    </div>
-                                    <div class="col-4">
-                                        {{ noticia.fecha_publicacion }}
-                                    </div>
-                                    {% if noticia.circuito != None %}
-                                    <div class="col-2">
+                                    <div class="row d-flex justify-content-end">
+                                        {% if noticia.circuito != None %}
+                                        <div class="col-3">
                                     
-                                        {{ noticia.circuito }}
+                                            <div class="card tema">
+                                                <div class="card-body">
+                                                <h3>{{ noticia.circuito }}</h3>
+                                                </div>
+                                        </div>
                                     
                                     </div>
                                     {% endif %}
                                 {% if noticia.escuderia.all.count > 0 %}
-                                <div class="col-2">
+                                <div class="col-3">
                                     {% for escuderia in noticia.escuderia.all %}
-                                    {{ escuderia.nombre }}
+                                    <div class="card tema">
+                                        <div class="card-body ">
+                                            <h3>{{ escuderia.nombre }}</h3>
+                                        </div>
+                                    </div>
                                     {% endfor %}
                                 </div>
                                 {% endif %}
-                                {% if not noticia.piloto.all.count > 0 %}
+                                {% if noticia.piloto.all.count > 0 %}
                                 <div class="col-2">
                                     {% for piloto in noticia.piloto.all %}
-                                    {{ piloto.nombre }}
+                                    <div class="card tema">
+                                        <div class="card-body">
+                                            <h3>{{ piloto.nombre }}</h3>
+                                        </div>
+                                    </div>
                                     {% endfor %}
                                 </div>
                                 {% endif %}
-                                </div>
-                                </div>
-                                </div>
-                                </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-3">
+                                                    <img class="img-fluid" src="{{ noticia.imagen.url}}" alt="">
+                                                </div>
+                                                <div class="col-9  position-relative">
+                                                    <div class="row pt-3 grid grid-5">
+                                                        <div class="col-12">
+                                                            <h2>{{ noticia.titulo }}</h2>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <h4>{{ noticia.subtitulo }}</h4>
+                                                        </div>
+                                                        <div class="col-3 position-absolute bottom-0 start-0 border border-5">
+                                                            <h3>{{ noticia.autor }}</h3>
+                                                        </div>
+                                                        <div class="col-4 position-absolute bottom-0 end-0 offset-5 border border-5">
+                                                            <h3>{{ noticia.fecha_publicacion }}</h3>
+                                                        </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
             </div>
         </div>
     </div>

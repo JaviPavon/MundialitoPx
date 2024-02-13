@@ -28,6 +28,15 @@ h1 a, h2 a, h2 {
     font-family: 'f1-bold';
 }
 
+h3 {
+    font-family: 'f1-regular';
+    font-size: 100%;
+}
+
+h4 {
+    font-family: 'f1-wide';
+    font-size: 20px;
+}
 .page-header {
     background-color: #15151E ;
     margin-top: 0;
@@ -40,6 +49,9 @@ h1 a, h2 a, h2 {
     text-decoration: none;
 }
 
+.tema {
+    height: 50px;
+}
 
 a{
     text-decoration: none;

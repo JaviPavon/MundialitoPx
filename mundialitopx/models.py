@@ -89,6 +89,7 @@ class Noticia(models.Model):
     piloto = models.ManyToManyField(Piloto, blank=True)
     autor = models.ForeignKey(Usuario, on_delete=models.CASCADE)
     titulo = models.CharField(max_length=100)
+    subtitulo = models.CharField(max_length=100)
     cuerpo = models.TextField()
     fecha_publicacion = models.DateField()
     imagen = models.ImageField(upload_to='media/noticia/', null=True, blank=True)
