@@ -5,7 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
-from .models import Piloto, Pais, Escuderia, Circuito, Carrera, Usuario
+from .models import Piloto, Pais, Escuderia, Circuito, Carrera, Usuario, Noticia
 from django.urls import reverse_lazy
 from django.db.models import Sum
 from .forms import CarreraForm, RegisterForm
@@ -23,6 +23,21 @@ from django.views.generic import (
 def home(request):
     return render(request, "mundialitopx/main/home.html", {})
 
+class ListaNoticias(ListView):
+    model = Noticia
+    template_name = "mundialitopx/main/noticias/noticias.html"
+    context_object_name = "noticias"
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+
+        context["noticias"] = Noticia.objects.all()
+        
+
+        return context
+        
+    
+
 # endregion
 
 # region Menú de Admin
@@ -33,7 +48,7 @@ def register(response):
         form = RegisterForm(response.POST)
         if form.is_valid():
             form.save()
-        return redirect("admin")
+        return redirect("inicio")
     else:
         form = RegisterForm()
         return render(response, "registration/registrar.html", {"form": form})

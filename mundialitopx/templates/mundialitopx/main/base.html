@@ -23,7 +23,7 @@
               <div class="col-9 d-flex justify-content-end fixed">
                 <ul class="nav col-12 col-lg-auto my-2  my-md-0 text-small">
                   <li class="align-items-center d-flex">
-                    <a href="#" class="a-banner nav-link">
+                    <a href="{% url 'noticias' %}" class="a-banner nav-link">
                       Noticias
                     </a>
                   </li class="align-items-center d-flex">
@@ -53,12 +53,17 @@
                             <img src="../../../../media/anonimo_perfil.png" alt="foto-perfil" width="32" height="32" class="rounded-circle">
                           </a>
                           <ul class="dropdown-menu dropdown-menu-lg-end">
-                            <li><a class="a-banner dropdown-item" href="#">Iniciar Sesión</a></li>
-                            <li><a class="a-banner dropdown-item" href="#">Registrarse</a></li>
+                            {% if user.is_authenticated %}
                             <li><a class="a-banner dropdown-item" href="#">Ver Perfil</a></li>
-                            <li><a class="a-banner dropdown-item" href="inicio/admin">admin</a></li>
+                            {% if user.is_staff %}
+                            <li><a class="a-banner dropdown-item" href="{% url 'admin' %}">admin</a></li>
+                            {% endif %}
                             <li><hr class="a-banner dropdown-divider"></li>
-                            <li><a class="a-banner dropdown-item" href="#">Cerrar Sesión</a></li>
+                            <li><a class="a-banner dropdown-item" href="{% url 'logout' %}">Cerrar Sesión</a></li>
+                            {% else %}
+                            <li><a class="a-banner dropdown-item" href="{% url 'login'%}">Iniciar Sesión</a></li>
+                            <li><a class="a-banner dropdown-item" href="{% url 'register' %}">Registrarse</a></li>
+                            {% endif %}
                           </ul>
                         </div>
                   </li>

@@ -85,16 +85,13 @@ class Carrera(models.Model):
 class Noticia(models.Model):
 
     circuito = models.ForeignKey(Circuito, on_delete=models.CASCADE, null=True, blank=True)
-    escuderia = models.ManyToManyField(Escuderia, blank=True)
-    piloto = models.ManyToManyField(Piloto, blank=True)
+    escuderia = models.ManyToManyField(Escuderia,null=True, blank=True)
+    piloto = models.ManyToManyField(Piloto,null=True, blank=True)
     autor = models.ForeignKey(Usuario, on_delete=models.CASCADE)
     titulo = models.CharField(max_length=100)
     cuerpo = models.TextField()
     fecha_publicacion = models.DateField()
     imagen = models.ImageField(upload_to='media/noticia/', null=True, blank=True)
-
-
-
 
     def __str__(self):
         return "'" + str(self.titulo)+ "' escrito por " + str(self.autor)
@@ -104,9 +101,6 @@ class Comentario(models.Model):
     noticia = models.ForeignKey(Noticia, on_delete=models.CASCADE)
     comentario = models.TextField()
     fecha_publicacion = models.DateField()
-    
-
-
 
 
     def __str__(self):

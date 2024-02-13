@@ -1,39 +1,58 @@
 {% extends 'mundialitopx/main/base.html' %}
 
 {% block content %}
-	<div class="row g-0">
-		<div class="inicio-escudo col">
-            <img src="../../../../media/Escudo_Paxangars_rojo.png" alt="">
+    <div class="row g-0 d-flex justify-content-center">
+        <div class="col-2">
+            <img class="img-fluid" src="../../../../../media/Escudo_Paxangars_rojo.png" alt="">
+
         </div>
-	</div>
+    </div>
     {% for noticia in noticias %}
 
-    <div class="row pt-5 g-0">
-        <div class="col-3">
-            <img height="100%"  src="{{ noticia.imagen.url}}" alt="">
-        </div>
-        <div class="col-9">
-            <div class="row">
-                <div class="col-12">
-                    <h2>{{ noticia.titulo }}</h2>
-                </div>
-                <div class="col-3">
-                    {{ noticia.autor }}
-                </div>
-                <div class="col-3">
-                    {{ noticia.fecha_publicacion }}
-                </div>
-                {% if noticia.circuito is notnull %}
-                    <div class="col-2">{{ noticia.circuito }}</div>
-                {% endif %}
-
-                {% if noticia.escuderia is notnull %}
-                    <div class="col-2">{{ noticia.escuderia }}</div>
-                {% endif %}
-
-                {% if noticia.piloto is notnull %}
-                    <div class="col-2">{{ noticia.piloto }}</div>
-                {% endif %}
+<div class="row pt-5 g-0 d-flex justify-content-center">
+    <div class="col-8">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-3">
+                            <img class="img-fluid" src="{{ noticia.imagen.url}}" alt="">
+                            </div>
+                            <div class="col-9">
+                                <div class="row grid grid-5">
+                                    <div class="col-12">
+                                        <h2>{{ noticia.titulo }}</h2>
+                                    </div>
+                                    <div class="col-3">
+                                        {{ noticia.autor }}
+                                    </div>
+                                    <div class="col-4">
+                                        {{ noticia.fecha_publicacion }}
+                                    </div>
+                                    {% if noticia.circuito != None %}
+                                    <div class="col-2">
+                                    
+                                        {{ noticia.circuito }}
+                                    
+                                    </div>
+                                    {% endif %}
+                                {% if noticia.escuderia.all.count > 0 %}
+                                <div class="col-2">
+                                    {% for escuderia in noticia.escuderia.all %}
+                                    {{ escuderia.nombre }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                                {% if not noticia.piloto.all.count > 0 %}
+                                <div class="col-2">
+                                    {% for piloto in noticia.piloto.all %}
+                                    {{ piloto.nombre }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                                </div>
+                                </div>
+                                </div>
+                                </div>
             </div>
         </div>
     </div>

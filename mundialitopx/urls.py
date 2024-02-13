@@ -33,10 +33,14 @@ from .views import (
     CrearCarrera, 
     EditarCarrera, 
     BorrarCarrera, 
+
+    ListaNoticias, 
 )
 
 urlpatterns = [
     path('', views.home, name='inicio'),
+    path('inicio/noticias', ListaNoticias.as_view(), name='noticias'),
+
 
     path('inicio/admin', views.admin, name='admin'),
     path('inicio/admin/piloto', staff_member_required(ListPilotos.as_view()), name='piloto'),
