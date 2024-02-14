@@ -49,6 +49,11 @@ class ListaPilotos(ListView):
         return context
 
 
+class DetallePiloto(DetailView):
+    model = Piloto
+    template_name = "mundialitopx/main/pilotos/detalle_piloto.html"
+
+
 class Clasificacion(ListView):
     model = Carrera
     template_name = "mundialitopx/main/clasificacion.html"

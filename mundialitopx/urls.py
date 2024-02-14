@@ -37,13 +37,15 @@ from .views import (
     ListaNoticias,
     ListaPilotos, 
     ListaEscuderias, 
-    Clasificacion
+    Clasificacion,
+    DetallePiloto, 
 )
 
 urlpatterns = [
     path('', views.home, name='inicio'),
     path('inicio/noticias', ListaNoticias.as_view(), name='noticias'),
     path('inicio/pilotos', ListaPilotos.as_view(), name='pilotos'),
+    path('inicio/pilotos/<int:pk>', DetallePiloto.as_view(), name='detallepiloto'),
     path('inicio/escuderias', ListaEscuderias.as_view(), name='escuderias'),
     path('inicio/clasificacion', Clasificacion.as_view(), name='clasificacion'),
 
