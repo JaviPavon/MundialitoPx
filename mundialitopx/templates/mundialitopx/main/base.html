@@ -28,17 +28,17 @@
                     </a>
                   </li class="align-items-center d-flex">
                   <li class="align-items-center d-flex">
-                    <a href="#" class="a-banner nav-link">
+                    <a href="{% url 'clasificacion' %}" class="a-banner nav-link">
                       Clasificación
                     </a>
                   </li>
                   <li class="align-items-center d-flex">
-                    <a href="#" class="a-banner nav-link">
+                    <a href="{% url 'pilotos' %}" class="a-banner nav-link">
                       Pilotos
                     </a>
                   </li>
                   <li class="align-items-center d-flex">
-                    <a href="#" class="a-banner nav-link">
+                    <a href="{% url 'escuderias' %}" class="a-banner nav-link">
                       Escuderías
                     </a>
                   </li>
@@ -50,7 +50,11 @@
                   <li class="align-items-center d-flex">
                       <div class="dropdown text-end">
                           <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            {% if request.user.fotoperfil.url %}
+                            <img src="{{ request.user.fotoperfil.url }}" alt="foto-perfil" width="32" height="32" class="rounded-circle">
+                            {% else %}
                             <img src="../../../../media/anonimo_perfil.png" alt="foto-perfil" width="32" height="32" class="rounded-circle">
+                            {% endif %}
                           </a>
                           <ul class="dropdown-menu dropdown-menu-lg-end">
                             {% if user.is_authenticated %}
@@ -76,7 +80,9 @@
           
         </nav>
       </header>
-        {% block content %}
+        <div class="container-fluid">
+          {% block content %}
         {% endblock %}
+        </div>
     </body>
 </html>

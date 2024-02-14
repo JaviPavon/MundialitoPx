@@ -1,0 +1,51 @@
+{% extends 'mundialitopx/main/base.html' %}
+
+{% block content %}
+
+<div class="row pt-5 ">
+    <div class="col 4">
+        <h2>Clasificación</h2>
+        <table class="table table-bordered">
+            <tr>
+                <th>Posición</th>
+                <th>Nombre</th>
+                <th>Puntos</th>
+            </tr>
+            {% for escuderia in escuderias %}
+            <tr>
+                <td>{{escuderia.puesto}}</td>
+                <td>{{escuderia.nombre}}</td>
+                <td>{{escuderia.puntos}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <div class="col-8 ">
+        <h2>Escuderias</h2>
+        {% for escuderia in escuderias %}
+
+
+
+        <div class="row pt-2">
+            <div class="col-12">
+                <div class="card card-escuderia">
+                    <div class="card-body">
+                        <div class="position-relative">
+                            <img src="{{ escuderia.monoplaza.url}}" alt="">
+                            <div class="text-white position-absolute bottom-0 start-0">
+                                <h3>{{ escuderia.nombre }}</h3>
+                                <h3>{{ escuderia.puntos }}pts</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

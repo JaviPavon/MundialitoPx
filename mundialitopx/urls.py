@@ -34,12 +34,18 @@ from .views import (
     EditarCarrera, 
     BorrarCarrera, 
 
-    ListaNoticias, 
+    ListaNoticias,
+    ListaPilotos, 
+    ListaEscuderias, 
+    Clasificacion
 )
 
 urlpatterns = [
     path('', views.home, name='inicio'),
     path('inicio/noticias', ListaNoticias.as_view(), name='noticias'),
+    path('inicio/pilotos', ListaPilotos.as_view(), name='pilotos'),
+    path('inicio/escuderias', ListaEscuderias.as_view(), name='escuderias'),
+    path('inicio/clasificacion', Clasificacion.as_view(), name='clasificacion'),
 
 
     path('inicio/admin', views.admin, name='admin'),

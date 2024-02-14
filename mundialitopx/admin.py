@@ -2,8 +2,16 @@ from django.contrib import admin
 from .models import Usuario, Pais, Piloto, Escuderia, Carrera, Circuito, Noticia, Comentario
 from django.contrib.auth.admin import UserAdmin
 
+class CustomUserAdmin(UserAdmin):
+    model = Usuario
+    fieldsets = UserAdmin.fieldsets + (
+    (None, {'fields': ('fotoperfil',)}),
+    )
+    add_fieldsets = UserAdmin.add_fieldsets + (
+    (None, {'fields': ('fotoperfil',)}),
+    )
 
-admin.site.register(Usuario,UserAdmin)
+admin.site.register(Usuario,CustomUserAdmin)
 admin.site.register(Pais)
 admin.site.register(Piloto)
 admin.site.register(Escuderia)

@@ -1,0 +1,29 @@
+{% extends 'mundialitopx/main/base.html' %}
+
+{% block content %}
+<div class="row pt-3">
+    <h2>Pilotos</h2>
+</div>
+<div class="row pt-5 d-flex justify-content-center">
+    {% for piloto in pilotos %}
+
+
+    <div class="col-3">
+        <div class="card card-piloto">
+            <div class="card-body">
+                <div class="position-relative">
+                    <img class="img-fluid" src="{{ piloto.foto.url}}" alt="">
+                    <div class="text-white position-absolute bottom-0 start-0">
+                        <h3>{{ piloto.nombre }}</h3>
+                        <h3>{{ piloto.puntos }}pts</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    {% endfor %}
+</div>
+
+{% endblock %}

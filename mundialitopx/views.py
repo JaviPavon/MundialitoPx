@@ -32,11 +32,49 @@ class ListaNoticias(ListView):
         context = super().get_context_data(**kwargs)
 
         context["noticias"] = Noticia.objects.all()
+
+        return context
+
+
+class ListaPilotos(ListView):
+    model = Piloto
+    template_name = "mundialitopx/main/pilotos/pilotos.html"
+    context_object_name = "pilotos"
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+
+        context["pilotos"] = Piloto.objects.all().order_by("escuderia")
+
+        return context
+
+
+class Clasificacion(ListView):
+    model = Carrera
+    template_name = "mundialitopx/main/clasificacion.html"
+    context_object_name = "carreras"
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+
+        context["carreras"] = Carrera.objects.all()
         
 
         return context
-        
-    
+
+
+class ListaEscuderias(ListView):
+    model = Escuderia
+    template_name = "mundialitopx/main/escuderias/escuderias.html"
+    context_object_name = "escuderias"
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+
+        context["escuderias"] = Escuderia.objects.all().order_by("nombre")
+
+        return context
+
 
 # endregion
 
