@@ -5,10 +5,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
-from .models import Piloto, Pais, Escuderia, Circuito, Carrera, Usuario, Noticia
+from .models import Piloto, Pais, Escuderia, Circuito, Carrera, Usuario, Noticia, Liga, PilotoJuego
 from django.urls import reverse_lazy
 from django.db.models import Sum
-from .forms import CarreraForm, RegisterForm
+from .forms import CarreraForm, RegisterForm, NoticiaForm
 
 from django.views.generic import (
     ListView,
@@ -32,6 +32,7 @@ class ListaNoticias(ListView):
         context = super().get_context_data(**kwargs)
 
         context["noticias"] = Noticia.objects.all()
+        context["circuitos"] = Circuito.objects.all()
 
         return context
 
@@ -45,6 +46,7 @@ class ListaPilotos(ListView):
         context = super().get_context_data(**kwargs)
 
         context["pilotos"] = Piloto.objects.all().order_by("escuderia")
+        context["pilotosc"] = Piloto.objects.all().order_by("puesto")
 
         return context
 
@@ -52,6 +54,23 @@ class ListaPilotos(ListView):
 class DetallePiloto(DetailView):
     model = Piloto
     template_name = "mundialitopx/main/pilotos/detalle_piloto.html"
+
+class DetalleNoticia(DetailView):
+    model = Noticia
+    template_name = "mundialitopx/main/noticias/detalle_noticia.html"
+
+class CrearNoticia(CreateView):
+    template_name = "mundialitopx/main/noticias/crear_noticia.html"
+    form_class = NoticiaForm  # Especifica la clase del formulario
+
+    def form_valid(self, form):
+        noticia = form.save(commit=False)
+        noticia.autor = self.request.user  # Asigna el autor de la noticia
+        noticia.fecha_publicacion = datetime.datetime.now().strftime('%Y-%m-%d')  # Formatear como cadena YYYY-MM-DD
+        noticia.save()
+        form.save_m2m()  # Guarda las relaciones ManyToMany
+        return redirect("noticias")
+
 
 
 class Clasificacion(ListView):
@@ -80,6 +99,18 @@ class ListaEscuderias(ListView):
 
         return context
 
+class ListaLigas(ListView):
+    model = Liga
+    template_name = 'mundialitopx/main/fantasy/fantasy.html'
+    context_object_name = 'ligas'
+    
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+
+        context["ligas"] = Liga.objects.filter(usuarios=self.request.user)
+        context["pilotos"] = PilotoJuego.objects.all().order_by("piloto__escuderia")
+
+        return context
 
 # endregion
 
@@ -276,9 +307,11 @@ class BorrarCarrera(DeleteView):
 
         piloto.puntos -= carrera.puntos
         piloto.save()
+        piloto.actualizar_puesto()
 
         escuderia.puntos -= carrera.puntos
         escuderia.save()
+        escuderia.actualizar_puesto()
 
         carrera.delete()
 
@@ -342,8 +375,11 @@ class CrearCarrera(CreateView):
 
             piloto.puntos += puntos
             piloto.save()
+            piloto.actualizar_puesto()
+
             escuderia.puntos += puntos
             escuderia.save()
+            escuderia.actualizar_puesto()
 
         return redirect("carrera")
 
@@ -392,10 +428,12 @@ class EditarCarrera(UpdateView):
         piloto.puntos -= carrera.puntos
         piloto.puntos += puntos
         piloto.save()
+        piloto.actualizar_puesto()
 
         escuderia.puntos -= carrera.puntos
         escuderia.puntos += puntos
         escuderia.save()
+        escuderia.actualizar_puesto()
 
         carrera.puesto = puesto
         carrera.puntos = puntos

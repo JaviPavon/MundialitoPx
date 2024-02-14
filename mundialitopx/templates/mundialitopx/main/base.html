@@ -43,7 +43,7 @@
                     </a>
                   </li>
                   <li class="align-items-center d-flex">
-                    <a href="#" class="a-banner nav-link">
+                    <a href="{% url 'fantasy' %}" class="a-banner nav-link">
                       Fantasy
                     </a>
                   </li>
@@ -58,7 +58,7 @@
                           </a>
                           <ul class="dropdown-menu dropdown-menu-lg-end">
                             {% if user.is_authenticated %}
-                            <li><a class="a-banner dropdown-item" href="#">Ver Perfil</a></li>
+
                             {% if user.is_staff %}
                             <li><a class="a-banner dropdown-item" href="{% url 'admin' %}">admin</a></li>
                             {% endif %}

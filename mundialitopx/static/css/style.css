@@ -47,7 +47,7 @@ h4 {
 }
 
 .page-header h1, .page-header h1 a, .page-header h1 a:visited, .page-header h1 a:active {
-    color: #ffffff;
+    color: #F7F4F1;
     font-size: 36pt;
     text-decoration: none;
 }
@@ -82,7 +82,7 @@ a{
     transition: color 1s ease-in-out;
 }
 .mcard:hover p{
-    color: #ffffff;
+    color: #F7F4F1;
     transition: color 1s ;
 }
 
@@ -94,8 +94,9 @@ a{
 }
 .plus{
     font-size: 50px;
-    color: #ffffff;
+    color: #F7F4F1;
 }
+
 
 .cardp{
     transition: all 1s;
@@ -115,4 +116,8 @@ a{
 
 .img-noticia {
     height: 80px;
+}
+
+.biografia {
+    text-align: justify;
 }

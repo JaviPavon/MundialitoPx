@@ -3,79 +3,101 @@
 {% block content %}
     <div class="row g-0 d-flex justify-content-center">
         <div class="col-2">
+            {% if user.is_staff %}
+            <a href="{% url 'crear_noticia' %}">
+                <img class="img-fluid" src="../../../../../media/Escudo_Paxangars_rojo.png" alt="">
+            </a>
+            {% else %}
             <img class="img-fluid" src="../../../../../media/Escudo_Paxangars_rojo.png" alt="">
+            {% endif %}
 
         </div>
-    </div>
-    {% for noticia in noticias %}
+        </div>
+        <div class="row">
+            <div class="col-5">
+                <h2>Carreras</h2>
+                <div class="row d-flex justify-content-center">
+                    {% for circuito in circuitos %}
+                    <div class="col-5 carrera bg-primary">
+                        <img class="img-fluid" src="{{ circuito.pista.url }}" alt="">
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-7">
+                <h2>Noticias</h2>
+                    {% for noticia in noticias %}
 
-<div class="row pt-5 g-0 d-flex justify-content-center">
-    <div class="col-8">
-                                    <div class="row d-flex justify-content-end">
-                                        {% if noticia.circuito != None %}
-                                        <div class="col-3">
-                                    
-                                            <div class="card tema">
-                                                <div class="card-body">
-                                                <h3>{{ noticia.circuito }}</h3>
-                                                </div>
-                                        </div>
-                                    
-                                    </div>
-                                    {% endif %}
-                                {% if noticia.escuderia.all.count > 0 %}
-                                <div class="col-3">
-                                    {% for escuderia in noticia.escuderia.all %}
-                                    <div class="card tema">
-                                        <div class="card-body ">
-                                            <h3>{{ escuderia.nombre }}</h3>
-                                        </div>
-                                    </div>
-                                    {% endfor %}
+    <div class="row pt-3 g-0 d-flex justify-content-center">
+        <a href="{% url 'detalle_noticia' noticia.pk %}">
+            <div class="col-11">
+                <div class="row d-flex justify-content-end">
+                    {% if noticia.circuito %}
+                    <div class="col-3">
+                        <div class="card tema">
+                            <div class="card-body">
+                                <h3>{{ noticia.circuito }}</h3>
+                            </div>
+                        </div>
+                        
+                        </div>
+                        {% endif %}
+                        {% if noticia.escuderia.all.count > 0 %}
+                        <div class="col-3">
+                            {% for escuderia in noticia.escuderia.all %}
+                            <div class="card tema">
+                                <div class="card-body ">
+                                    <h3>{{ escuderia.nombre }}</h3>
                                 </div>
-                                {% endif %}
-                                {% if noticia.piloto.all.count > 0 %}
-                                <div class="col-2">
-                                    {% for piloto in noticia.piloto.all %}
-                                    <div class="card tema">
-                                        <div class="card-body">
-                                            <h3>{{ piloto.nombre }}</h3>
-                                        </div>
-                                    </div>
-                                    {% endfor %}
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                        {% if noticia.piloto.all.count > 0 %}
+                        <div class="col-2">
+                            {% for piloto in noticia.piloto.all %}
+                            <div class="card tema">
+                                <div class="card-body">
+                                    <h3>{{ piloto.nombre }}</h3>
                                 </div>
-                                {% endif %}
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-3">
+                                        <img class="img-fluid" src="{{ noticia.imagen.url}}" alt="">
                                     </div>
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-3">
-                                                    <img class="img-fluid" src="{{ noticia.imagen.url}}" alt="">
-                                                </div>
-                                                <div class="col-9  position-relative">
-                                                    <div class="row pt-3 grid grid-5">
-                                                        <div class="col-12">
-                                                            <h2>{{ noticia.titulo }}</h2>
-                                                        </div>
-                                                        <div class="col-12">
-                                                            <h4>{{ noticia.subtitulo }}</h4>
-                                                        </div>
-                                                        <div class="col-3 position-absolute bottom-0 start-0 border border-5">
-                                                            <h3>{{ noticia.autor }}</h3>
-                                                        </div>
-                                                        <div class="col-4 position-absolute bottom-0 end-0 offset-5 border border-5">
-                                                            <h3>{{ noticia.fecha_publicacion }}</h3>
-                                                        </div>
-                                                </div>
+                                    <div class="col-9  position-relative">
+                                        <div class="row pt-3 grid grid-5">
+                                            <div class="col-12">
+                                                <h2>{{ noticia.titulo }}</h2>
+                                            </div>
+                                            <div class="col-12">
+                                                <h4>{{ noticia.subtitulo }}</h4>
+                                            </div>
+                                            <div class="col-3 position-absolute bottom-0 start-0 border border-5">
+                                                <h3>{{ noticia.autor }}</h3>
+                                            </div>
+                                            <div class="col-4 position-absolute bottom-0 end-0 offset-5 border border-5">
+                                                <h3>{{ noticia.fecha_publicacion }}</h3>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
             </div>
-        </div>
+            </div>
+        </a>
     </div>
 
 
 
     {% endfor %}
+        </div>
+        </div>
  
 {% endblock %}

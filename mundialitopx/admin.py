@@ -1,5 +1,15 @@
 from django.contrib import admin
-from .models import Usuario, Pais, Piloto, Escuderia, Carrera, Circuito, Noticia, Comentario
+from .models import (
+    Usuario,
+    Pais,
+    Piloto,
+    Escuderia,
+    Carrera,
+    Circuito,
+    Noticia,
+    Comentario,
+    PilotoJuego,
+)
 from django.contrib.auth.admin import UserAdmin
 
 class CustomUserAdmin(UserAdmin):
@@ -19,3 +29,4 @@ admin.site.register(Carrera)
 admin.site.register(Circuito)
 admin.site.register(Noticia)
 admin.site.register(Comentario)
+admin.site.register(PilotoJuego)

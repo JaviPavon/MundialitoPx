@@ -48,6 +48,12 @@ class Escuderia(models.Model):
     def __str__(self):
         return self.nombre
     
+    def actualizar_puesto(self):
+        escuderias_ordenadas = Escuderia.objects.order_by('-puntos')
+
+        for i, escuderia in enumerate(escuderias_ordenadas):
+            Escuderia.objects.filter(pk=escuderia.pk).update(puesto=i+1)
+    
 class Piloto(models.Model):
     nombre = models.CharField(max_length=100)
     puntos = models.IntegerField(default=0)
@@ -60,6 +66,12 @@ class Piloto(models.Model):
 
     def __str__(self):
         return self.nombre
+    
+    def actualizar_puesto(self):
+        pilotos_ordenados = Piloto.objects.order_by('-puntos')
+
+        for i, piloto in enumerate(pilotos_ordenados):
+            Piloto.objects.filter(pk=piloto.pk).update(puesto=i+1)
 
 
 class Carrera(models.Model):
