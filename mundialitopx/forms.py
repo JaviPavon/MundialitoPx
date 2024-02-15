@@ -1,5 +1,5 @@
 from django import forms
-from .models import Carrera, Usuario, Noticia
+from .models import Carrera, Usuario, Noticia, Liga
 from django.contrib.auth.forms import UserCreationForm
 
 
@@ -12,6 +12,11 @@ class NoticiaForm(forms.ModelForm):
     class Meta:
         model = Noticia
         fields = ["titulo", "subtitulo", "cuerpo", "imagen", "circuito", "escuderia", "piloto"]
+
+class LigaForm(forms.ModelForm):
+    class Meta:
+        model = Liga
+        fields = ["estado", "nombre", "contraseña"]
 
 
 

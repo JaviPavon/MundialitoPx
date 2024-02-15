@@ -8,7 +8,7 @@ from django.views import View
 from .models import Piloto, Pais, Escuderia, Circuito, Carrera, Usuario, Noticia, Liga, PilotoJuego
 from django.urls import reverse_lazy
 from django.db.models import Sum
-from .forms import CarreraForm, RegisterForm, NoticiaForm
+from .forms import CarreraForm, RegisterForm, NoticiaForm, LigaForm
 
 from django.views.generic import (
     ListView,
@@ -17,6 +17,36 @@ from django.views.generic import (
     UpdateView,
     CreateView,
 )
+
+
+# region Fantasy
+
+
+class CrearLiga(CreateView):
+    template_name = "mundialitopx/main/fantasy/crear_liga.html"
+    form_class = LigaForm
+    success_url = reverse_lazy("fantasy")
+
+    def form_valid(self, form):
+        liga = form.save(commit=False)
+        liga.save()
+        # Agregar el usuario actual a la liga creada
+        liga.usuarios.add(self.request.user)
+        return super().form_valid(form)
+    
+class ListaLigas(ListView):
+    model = Liga
+    template_name = 'mundialitopx/main/fantasy/fantasy.html'
+    context_object_name = 'ligas'
+    
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+
+        context["ligas"] = Liga.objects.filter(usuarios=self.request.user)
+        context["pilotos"] = PilotoJuego.objects.all().order_by("piloto__escuderia")
+
+        return context
+# endregion
 
 # region Página Principal
 
@@ -55,36 +85,42 @@ class DetallePiloto(DetailView):
     model = Piloto
     template_name = "mundialitopx/main/pilotos/detalle_piloto.html"
 
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        piloto = self.object
+        context["carreras"] = Carrera.objects.filter(piloto=piloto)
+        return context
+
+
+class DetalleEscuderia(DetailView):
+    model = Escuderia
+    template_name = "mundialitopx/main/escuderias/detalle_escuderia.html"
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        escuderia = self.object
+        context["carreras"] = Carrera.objects.filter(piloto__escuderia=escuderia)
+        context["carreras"] = context["carreras"].order_by("circuito")
+        context["pilotos"] = Piloto.objects.filter(escuderia=escuderia)
+        return context
+
+
 class DetalleNoticia(DetailView):
     model = Noticia
     template_name = "mundialitopx/main/noticias/detalle_noticia.html"
 
 class CrearNoticia(CreateView):
     template_name = "mundialitopx/main/noticias/crear_noticia.html"
-    form_class = NoticiaForm  # Especifica la clase del formulario
+    form_class = NoticiaForm
 
     def form_valid(self, form):
         noticia = form.save(commit=False)
-        noticia.autor = self.request.user  # Asigna el autor de la noticia
-        noticia.fecha_publicacion = datetime.datetime.now().strftime('%Y-%m-%d')  # Formatear como cadena YYYY-MM-DD
+        noticia.autor = self.request.user
+        noticia.fecha_publicacion = datetime.datetime.now().strftime("%Y-%m-%d")
         noticia.save()
-        form.save_m2m()  # Guarda las relaciones ManyToMany
+        form.save_m2m()
         return redirect("noticias")
 
-
-
-class Clasificacion(ListView):
-    model = Carrera
-    template_name = "mundialitopx/main/clasificacion.html"
-    context_object_name = "carreras"
-
-    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
-        context = super().get_context_data(**kwargs)
-
-        context["carreras"] = Carrera.objects.all()
-        
-
-        return context
 
 
 class ListaEscuderias(ListView):
@@ -95,20 +131,7 @@ class ListaEscuderias(ListView):
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
 
-        context["escuderias"] = Escuderia.objects.all().order_by("nombre")
-
-        return context
-
-class ListaLigas(ListView):
-    model = Liga
-    template_name = 'mundialitopx/main/fantasy/fantasy.html'
-    context_object_name = 'ligas'
-    
-    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
-        context = super().get_context_data(**kwargs)
-
-        context["ligas"] = Liga.objects.filter(usuarios=self.request.user)
-        context["pilotos"] = PilotoJuego.objects.all().order_by("piloto__escuderia")
+        context["escuderiasc"] = Escuderia.objects.all().order_by("puesto")
 
         return context
 
@@ -437,6 +460,10 @@ class EditarCarrera(UpdateView):
 
         carrera.puesto = puesto
         carrera.puntos = puntos
+        if vuelta_rapida:
+            carrera.vuelta_rapida = True
+        else:
+            carrera.vuelta_rapida = False
         carrera.save()
 
         return redirect("carrera")

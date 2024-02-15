@@ -1,18 +1,26 @@
 {% extends 'mundialitopx/main/base.html' %}
 
 {% block content %}
-<div class="row">
+<div class="row d-flex justify-content-center">
     <h1>Fantasy Paxangars</h1>
     <h2>Ligas a la que pertenece</h2>
     {% for liga in ligas %}
     <div class="col-4">
-
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        {{ liga.nombre }}
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     {% endfor %}
     <div class="col-12">
         <div class="row d-flex justify-content-center">
             <div class="col-4">
-                <a class="btn btn-primary">Crear Liga</a>
+                <a href="{% url 'crear_liga' %}" class="btn btn-primary">Crear Liga</a>
             </div>
             <div class="col-4">
                 <a class="btn btn-primary">Unirse a una liga</a>
@@ -28,10 +36,10 @@
         <a href="{% url 'detallepiloto' piloto_juego.piloto.pk %}">
             <div class="position-relative">
                 <img class="object-fit-fill border rounded img-fluid" src="{{ piloto_juego.piloto.foto.url}}" alt="">
-                <div class="text-white position-absolute top-0 start-0">
+                <div class="texto-foto text-start text-white position-absolute top-0 start-0">
                     <p> {{ piloto_juego.valor }}€</p>
                 </div>
-                <div class="text-white position-absolute bottom-0 start-0">
+                <div class="texto-foto text-start text-white position-absolute bottom-0 start-0">
                     <h3> {{ piloto_juego.piloto.nombre }}</h3>
                     <h3> {{ piloto_juego.puntos_totales }}pts</h3>
                 </div>

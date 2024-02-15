@@ -1,13 +1,13 @@
 {% extends 'mundialitopx/main/base.html' %}
 
 {% block content %}
-<div class="row ">
-    <div class="col-5 offset-1 pt-5">
+<div class="row d-flex justify-content-center">
+    <div class="col-7 pt-5">
         <div class="card">
             <div class="card-title">
                 <div class="row pt-4 g-3">
                     <div class="col-3 offset-1">
-                        <img class="img-fluid shadow" src="{{ piloto.foto.url }}" alt="piloto">
+                        <img class="object-fit-fill border rounded img-fluid shadow" src="{{ piloto.foto.url }}" alt="piloto">
                     </div>
                     <div class="col-8 text-start">
                         <div class="position-relative">
@@ -33,8 +33,29 @@
             </div>
         </div>
     </div>
-    <div class="col-3">
-
+    <div class="col-4 pt-5">
+        {% if carreras %}
+        <table class="table table-bordered">
+            <tr class="table-dark">
+                <th>Circuito</th>
+                <th>Posición</th>
+                <th>Puntos</th>
+            </tr>
+            {% for carrera in carreras %}
+            <tr>
+                <td class="table-light">{{ carrera.circuito.nombre }}</td>
+                <td>{{ carrera.puesto }}º</td>
+                {% if carrera.vuelta_rapida == True %}
+                <td class="bg-success">{{ carrera.puntos }}</td>
+                {% else %}
+                <td>{{ carrera.puntos }}</td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+        <p>No se encuentra la carrera</p>
+        {% endif %}
     </div>
 </div>
 {% endblock %}

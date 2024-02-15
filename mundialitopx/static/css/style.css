@@ -53,8 +53,9 @@ h4 {
 }
 
 .tema {
-    height: 50px;
-}
+    font-size: 90%;
+    }
+    
 
 a{
     text-decoration: none;
@@ -115,9 +116,25 @@ a{
 }
 
 .img-noticia {
-    height: 80px;
+    width: 100%;
 }
 
 .biografia {
     text-align: justify;
 }
+.noticia {
+    text-align: justify;
+}
+
+.texto-foto {
+    margin-left: 5%;
+}
+
+.logo {
+    height: 80px;
+}
+
+.texto-justificado {
+    height: 80px;
+}
+
