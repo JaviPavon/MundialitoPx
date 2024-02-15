@@ -53,9 +53,18 @@ h4 {
 }
 
 .tema {
+<<<<<<< HEAD
     font-size: 90%;
     }
     
+=======
+    font-size: 70%;
+    }
+    
+    .imagen-noticia {
+        height: 250px;
+}
+>>>>>>> fb1c5b745eb46286be1e81be7d14a21d60a3b474
 
 a{
     text-decoration: none;
@@ -129,6 +138,7 @@ a{
 .texto-foto {
     margin-left: 5%;
 }
+<<<<<<< HEAD
 
 .logo {
     height: 80px;
@@ -138,3 +148,8 @@ a{
     height: 80px;
 }
 
+=======
+.logo {
+    height: 80px;
+}
+>>>>>>> fb1c5b745eb46286be1e81be7d14a21d60a3b474

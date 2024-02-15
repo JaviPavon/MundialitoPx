@@ -41,9 +41,12 @@ from .views import (
     DetalleNoticia, 
     CrearNoticia, 
     DetalleEscuderia, 
+<<<<<<< HEAD
 
     ListaLigas, 
     CrearLiga, 
+=======
+>>>>>>> fb1c5b745eb46286be1e81be7d14a21d60a3b474
 )
 
 urlpatterns = [

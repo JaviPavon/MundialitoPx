@@ -1,7 +1,29 @@
 {% extends 'mundialitopx/main/base.html' %}
 
 {% block content %}
+<<<<<<< HEAD
 <div class="row noticiat pt-5 d-flex justify-content-center">
+=======
+<div class="row pt-5 d-flex justify-content-center">
+    <h2>{{ noticia.titulo }}</h2>
+    <div class="col-8 pt-3">
+        <img class="imagen-noticia" src="{{ noticia.imagen.url }}" alt="">
+    </div>
+
+</div>
+<div class="row d-flex justify-content-center pt-3">
+    <div class="col-10">
+        <div class="position-relative">
+            <hr>
+            <div class="position-absolute top-0 start-0">
+                <p>Escrito por: {{ noticia.autor }}</p>
+            </div>
+            <div class="position-absolute top-0 end-0">
+                <p>Fecha de publicación: {{ noticia.fecha_publicacion|date:"d-m-Y" }} </p>
+            </div>
+        </div>
+    </div>
+>>>>>>> fb1c5b745eb46286be1e81be7d14a21d60a3b474
     <div class="col-10 pt-4">
         <div class="row">
             {% if noticia.circuito %}
@@ -24,8 +46,13 @@
                         </div>
                 </div>
                 {% endfor %}
+<<<<<<< HEAD
             {% endif %}
             {% if noticia.piloto.all.count > 0 %}
+=======
+                {% endif %}
+                {% if noticia.piloto.all.count > 0 %}
+>>>>>>> fb1c5b745eb46286be1e81be7d14a21d60a3b474
                 {% for piloto in noticia.piloto.all %}
                     <div class="col-2">
                         <a href="{% url 'detallepiloto' piloto.pk%}">
@@ -35,6 +62,7 @@
                                 </div>
                             </div>
                         </a>
+<<<<<<< HEAD
                         </div>
                 {% endfor %}
             {% endif %}
@@ -60,6 +88,12 @@
     </div>
     <div class="col-10 pt-1">
         <hr>
+=======
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+>>>>>>> fb1c5b745eb46286be1e81be7d14a21d60a3b474
     </div>
     <div class="text-start noticia col-10 pt-2">
         <p>{{ noticia.cuerpo }}</p>

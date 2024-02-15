@@ -131,7 +131,20 @@ class ListaEscuderias(ListView):
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
 
-        context["escuderiasc"] = Escuderia.objects.all().order_by("puesto")
+        context["escuderias"] = Escuderia.objects.all().order_by("nombre")
+
+        return context
+
+class ListaLigas(ListView):
+    model = Liga
+    template_name = 'mundialitopx/main/fantasy/fantasy.html'
+    context_object_name = 'ligas'
+    
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+
+        context["ligas"] = Liga.objects.filter(usuarios=self.request.user)
+        context["pilotos"] = PilotoJuego.objects.all().order_by("piloto__escuderia")
 
         return context
 
