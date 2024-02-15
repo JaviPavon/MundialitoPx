@@ -55,22 +55,30 @@ class DetallePiloto(DetailView):
     model = Piloto
     template_name = "mundialitopx/main/pilotos/detalle_piloto.html"
 
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        piloto = self.object
+        print(piloto)
+        context["carreras"] = Carrera.objects.filter(piloto=piloto)
+        print(context)
+        return context
+
+
 class DetalleNoticia(DetailView):
     model = Noticia
     template_name = "mundialitopx/main/noticias/detalle_noticia.html"
 
 class CrearNoticia(CreateView):
     template_name = "mundialitopx/main/noticias/crear_noticia.html"
-    form_class = NoticiaForm  # Especifica la clase del formulario
+    form_class = NoticiaForm
 
     def form_valid(self, form):
         noticia = form.save(commit=False)
-        noticia.autor = self.request.user  # Asigna el autor de la noticia
-        noticia.fecha_publicacion = datetime.datetime.now().strftime('%Y-%m-%d')  # Formatear como cadena YYYY-MM-DD
+        noticia.autor = self.request.user
+        noticia.fecha_publicacion = datetime.datetime.now().strftime("%Y-%m-%d")
         noticia.save()
-        form.save_m2m()  # Guarda las relaciones ManyToMany
+        form.save_m2m()
         return redirect("noticias")
-
 
 
 class Clasificacion(ListView):
@@ -95,7 +103,7 @@ class ListaEscuderias(ListView):
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
 
-        context["escuderias"] = Escuderia.objects.all().order_by("nombre")
+        context["escuderiasc"] = Escuderia.objects.all().order_by("puesto")
 
         return context
 
@@ -437,6 +445,10 @@ class EditarCarrera(UpdateView):
 
         carrera.puesto = puesto
         carrera.puntos = puntos
+        if vuelta_rapida:
+            carrera.vuelta_rapida = True
+        else:
+            carrera.vuelta_rapida = False
         carrera.save()
 
         return redirect("carrera")

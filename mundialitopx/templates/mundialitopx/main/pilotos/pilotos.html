@@ -7,14 +7,14 @@
         <div class="row pt-4">
             <div class="col-12">
                 <table class="table table-bordered">
-                    <tr>
+                    <tr class="table-dark">
                         <th>Posición</th>
                         <th>Nombre</th>
                         <th>Puntos</th>
                     </tr>
                     {% for piloto in pilotosc %}
                     <tr>
-                        <td>{{piloto.puesto}}</td>
+                        <td class="table-light">{{piloto.puesto}}</td>
                         <td>{{piloto.nombre}}</td>
                         <td>{{piloto.puntos}}</td>
                     </tr>
@@ -31,10 +31,10 @@
                 <a href="{% url 'detallepiloto' piloto.pk %}">
                     <div class="position-relative">
                         <img class="object-fit-fill border rounded img-fluid" src="{{ piloto.foto.url}}" alt="">
-                        <div class="text-white position-absolute top-0 start-0">
+                        <div class="texto-foto text-white position-absolute top-0 start-0">
                             <h1> {{ piloto.dorsal }}</h1>
                         </div>
-                        <div class="text-white position-absolute bottom-0 start-0">
+                        <div class="texto-foto text-start text-white position-absolute bottom-0 start-0">
                             <h3> {{ piloto.nombre }}</h3>
                             <h3> {{ piloto.puntos }}pts</h3>
                         </div>

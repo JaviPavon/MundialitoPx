@@ -5,17 +5,17 @@
 <div class="row pt-5 ">
     <div class="col 4 sticky-left">
         <h2>Clasificación</h2>
-        <div class="row">
+        <div class="row pt-4 ">
             <div class="col-12">
-                <table class="table table-bordered">
-                    <tr>
+                <table class="table table-rounded table-bordered">
+                    <tr class="table-dark">
                         <th>Posición</th>
                         <th>Nombre</th>
                         <th>Puntos</th>
                     </tr>
-                    {% for escuderia in escuderias %}
+                    {% for escuderia in escuderiasc %}
                     <tr>
-                        <td>{{escuderia.puesto}}</td>
+                        <td class="table-light">{{escuderia.puesto}}</td>
                         <td>{{escuderia.nombre}}</td>
                         <td>{{escuderia.puntos}}</td>
                     </tr>
@@ -26,7 +26,7 @@
         </div>
     <div class="col-8 ">
         <h2>Escuderias</h2>
-        {% for escuderia in escuderias %}
+        {% for escuderia in escuderiasc %}
 
 
 
@@ -34,7 +34,7 @@
             <div class="col-10 offset-1">
                 <div class="position-relative">
                     <img class="object-fit-fill border rounded img-fluid" src="{{ escuderia.monoplaza.url}}" alt="">
-                    <div class="text-white position-absolute bottom-0 start-0 ">
+                    <div class="texto-foto text-start text-white position-absolute bottom-0 start-0 ">
                         <div class="row">
                             <div class="col-11">
                                 <h3>{{ escuderia.nombre }}</h3>
