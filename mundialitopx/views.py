@@ -62,6 +62,19 @@ class DetallePiloto(DetailView):
         return context
 
 
+class DetalleEscuderia(DetailView):
+    model = Escuderia
+    template_name = "mundialitopx/main/escuderias/detalle_escuderia.html"
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        escuderia = self.object
+        context["carreras"] = Carrera.objects.filter(piloto__escuderia=escuderia)
+        context["carreras"] = context["carreras"].order_by("circuito")
+        context["pilotos"] = Piloto.objects.filter(escuderia=escuderia)
+        return context
+
+
 class DetalleNoticia(DetailView):
     model = Noticia
     template_name = "mundialitopx/main/noticias/detalle_noticia.html"
@@ -87,9 +100,9 @@ class Clasificacion(ListView):
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
 
-        context["carreras"] = Carrera.objects.all()
-        
-
+        context["carreras"] = Carrera.objects.order_by("circuito")
+        context["carrerasP"] = Pais.objects.filter(circuito__carrera__in=context["carreras"]).distinct()
+        print(context)
         return context
 
 

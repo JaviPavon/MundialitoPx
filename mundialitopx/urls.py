@@ -42,6 +42,7 @@ from .views import (
     ListaLigas, 
     DetalleNoticia, 
     CrearNoticia, 
+    DetalleEscuderia, 
 )
 
 urlpatterns = [
@@ -53,6 +54,7 @@ urlpatterns = [
     path('inicio/clasificacion', Clasificacion.as_view(), name='clasificacion'),
     path('inicio/fantasy', ListaLigas.as_view(), name='fantasy'),
     path('inicio/noticias/<int:pk>', DetalleNoticia.as_view(), name='detalle_noticia'),
+    path('inicio/escuderias/<int:pk>', DetalleEscuderia.as_view(), name='detalleescuderia'),
     path('inicio/noticias/crear', staff_member_required(CrearNoticia.as_view()), name='crear_noticia'),
 
 

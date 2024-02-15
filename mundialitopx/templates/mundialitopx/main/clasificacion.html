@@ -10,80 +10,11 @@
                   <th scope="col" class="table-dark">P</th>
                 <th scope="col" class="table-dark">Pilotos</th>
                 <th scope="col" class="table-warning">Puntos</th>
-                <th scope="col" class="table-dark">BH
-                  <img class="banderas" src="assets/Banderas/Bahrein.png" alt="Bahrein">
+                {% for carrera in carrerasP %}
+                <th scope="col" class="table-dark">
+                  <img class="w-25" src="{{carrera.bandera.url}}" alt="">
                 </th>
-                <th scope="col" class="table-dark">AS
-                  <img class="banderas" src="assets/Banderas/arabiasaudi.png" alt="Arabia Saudi">
-                </th>
-                <th scope="col" class="table-dark">AU
-                  <img class="banderas" src="assets/Banderas/australia.png" alt="Australia">
-                </th>
-                <th scope="col" class="table-dark">IM
-                  <img class="banderas" src="assets/Banderas/italy.png" alt="Imola">
-                </th>
-                <th scope="col" class="table-dark">PO
-                  <img class="banderas" src="assets/Banderas/portugal.png" alt="Portugal">
-                </th>
-                <th scope="col" class="table-dark">MI
-                  <img class="banderas" src="assets/Banderas/eeuu.png" alt="Miami">
-                </th>
-                
-                <th scope="col" class="table-dark">ES
-                  <img class="banderas" src="assets/Banderas/spain.png" alt="España">
-                </th>
-                
-                <th scope="col" class="table-dark">MN
-                  <img class="banderas" src="assets/Banderas/monaco.png" alt="Monaco">
-                </th>
-                
-                <th scope="col" class="table-dark">AZ
-                  <img class="banderas" src="assets/Banderas/azerbaijan.png" alt="azerbaijan">
-                </th>
-                
-                <th scope="col" class="table-dark">CA
-                  <img class="banderas" src="assets/Banderas/canada.png" alt="Canada">
-                </th>
-                
-                <th scope="col" class="table-dark">SL
-                  <img class="banderas" src="assets/Banderas/uk.png" alt="Silverstone">
-                </th>
-                <th scope="col" class="table-dark">AUS
-                  <img class="banderas" src="assets/Banderas/austria.png" alt="Austria">
-                </th>
-                <th scope="col" class="table-dark">FR
-                  <img class="banderas" src="assets/Banderas/france.png" alt="Francia">
-                </th>
-                <th scope="col" class="table-dark">HU
-                  <img class="banderas" src="assets/Banderas/hungary.png" alt="Hungria">
-                </th>
-                <th scope="col" class="table-dark">BL
-                  <img class="banderas" src="assets/Banderas/belgium.png" alt="Belgica">
-                </th>
-                <th scope="col" class="table-dark">HO
-                  <img class="banderas" src="assets/Banderas/netherlands.png" alt="Holanda">
-                </th>
-                <th scope="col" class="table-dark">IT
-                  <img class="banderas" src="assets/Banderas/italy.png" alt="Italia">
-                </th>
-                <th scope="col" class="table-dark">SG
-                  <img class="banderas" src="assets/Banderas/singapore.png" alt="Singapore">
-                </th>
-                <th scope="col" class="table-dark">JA
-                  <img class="banderas" src="assets/Banderas/japan.png" alt="Japon">
-                </th>
-                <th scope="col" class="table-dark">US
-                  <img class="banderas" src="assets/Banderas/eeuu.png" alt="Estados Unidos">
-                </th>
-                <th scope="col" class="table-dark">MX
-                  <img class="banderas" src="assets/Banderas/mexico.png" alt="Mexico">
-                </th>
-                <th scope="col" class="table-dark">BR
-                  <img class="banderas" src="assets/Banderas/brazil.png" alt="Brasil">
-                </th>
-                <th scope="col" class="table-dark">AD
-                  <img class="banderas" src="assets/Banderas/ae.png" alt="Abu dabi">
-                </th>
+                {% endfor %}
               </tr>
             </thead>
             

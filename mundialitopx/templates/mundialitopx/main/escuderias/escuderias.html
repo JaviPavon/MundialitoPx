@@ -15,7 +15,7 @@
                     </tr>
                     {% for escuderia in escuderiasc %}
                     <tr>
-                        <td class="table-light">{{escuderia.puesto}}</td>
+                        <td class="table-light">{{escuderia.puesto}}º</td>
                         <td>{{escuderia.nombre}}</td>
                         <td>{{escuderia.puntos}}</td>
                     </tr>
@@ -30,22 +30,24 @@
 
 
 
-        <div class="row pt-4">
-            <div class="col-10 offset-1">
-                <div class="position-relative">
-                    <img class="object-fit-fill border rounded img-fluid" src="{{ escuderia.monoplaza.url}}" alt="">
-                    <div class="texto-foto text-start text-white position-absolute bottom-0 start-0 ">
-                        <div class="row">
-                            <div class="col-11">
-                                <h3>{{ escuderia.nombre }}</h3>
-                                <h3>{{ escuderia.puntos }}pts</h3>
+        <a href="{% url 'detalleescuderia' escuderia.pk %}">
+            <div class="row pt-4">
+                <div class="col-10 offset-1">
+                    <div class="position-relative">
+                        <img class="object-fit-fill border rounded img-fluid" src="{{ escuderia.monoplaza.url}}" alt="">
+                        <div class="texto-foto text-start text-white position-absolute bottom-0 start-0 ">
+                            <div class="row">
+                                <div class="col-11">
+                                    <h3>{{ escuderia.nombre }}</h3>
+                                    <h3>{{ escuderia.puntos }}pts</h3>
+                                </div>
                             </div>
                         </div>
+            
                     </div>
-                        
                 </div>
             </div>
-        </div>
+        </a>
 
 
 
