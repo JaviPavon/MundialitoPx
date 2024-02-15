@@ -58,9 +58,7 @@ class DetallePiloto(DetailView):
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         piloto = self.object
-        print(piloto)
         context["carreras"] = Carrera.objects.filter(piloto=piloto)
-        print(context)
         return context
 
 
