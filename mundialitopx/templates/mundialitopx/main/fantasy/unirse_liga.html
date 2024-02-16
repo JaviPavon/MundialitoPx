@@ -1,0 +1,45 @@
+{% extends 'mundialitopx/main/base.html' %}
+
+{% block content %}
+<div class="row d-flex justify-content-center">
+    <h1>Fantasy Paxangars</h1>
+    <div class="col-12 pt-4">
+        <h2>Ligas Privadas</h2>
+    <div class="row pt-2">
+        {% for liga in ligaspriv %}
+    <div class="col-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12">
+                        <p>{{ liga.nombre }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    </div>
+    </div>
+    <div class="col-12 pt-4">
+        <h2>Ligas Públicas</h2>
+    <div class="row pt-2">
+        {% for liga in ligaspub %}
+    <div class="col-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12">
+                        <p>{{ liga.nombre }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    </div>
+    </div>
+</div>
+
+
+{% endblock %}

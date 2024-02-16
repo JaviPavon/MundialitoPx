@@ -25,6 +25,7 @@ urlpatterns = [
     path('',include("mundialitopx.urls")),
     path('accounts/', include("django.contrib.auth.urls")),
     path('register/', v.register, name="register"),
+    path('api/', include('api.urls', namespace='api')),
 ]
 
 

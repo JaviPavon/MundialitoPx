@@ -129,11 +129,10 @@ class Liga(models.Model):
     contraseña = models.CharField(max_length=15)
     estado = models.CharField(max_length=7, choices=estado, null=True, blank=True)
 
-
-
-
     def __str__(self):
         return str(self.nombre)
+    
+    
     
 class PilotoJuego(models.Model):
 

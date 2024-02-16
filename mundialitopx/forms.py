@@ -1,5 +1,5 @@
 from django import forms
-from .models import Carrera, Usuario, Noticia, Liga
+from .models import Carrera, Usuario, Noticia, Liga, Comentario
 from django.contrib.auth.forms import UserCreationForm
 
 
@@ -17,6 +17,11 @@ class LigaForm(forms.ModelForm):
     class Meta:
         model = Liga
         fields = ["estado", "nombre", "contraseña"]
+
+class ComentarioForm(forms.ModelForm):
+    class Meta:
+        model = Comentario
+        fields = ["comentario"]
 
 
 

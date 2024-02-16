@@ -9,6 +9,8 @@ from .models import (
     Noticia,
     Comentario,
     PilotoJuego,
+    Liga,
+    Jugador,
 )
 from django.contrib.auth.admin import UserAdmin
 
@@ -30,3 +32,5 @@ admin.site.register(Circuito)
 admin.site.register(Noticia)
 admin.site.register(Comentario)
 admin.site.register(PilotoJuego)
+admin.site.register(Liga)
+admin.site.register(Jugador)

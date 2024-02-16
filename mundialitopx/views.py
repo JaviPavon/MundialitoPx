@@ -5,10 +5,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
-from .models import Piloto, Pais, Escuderia, Circuito, Carrera, Usuario, Noticia, Liga, PilotoJuego
+from .models import Piloto, Pais, Escuderia, Circuito, Carrera, Usuario, Noticia, Liga, PilotoJuego, Jugador, Comentario
 from django.urls import reverse_lazy
 from django.db.models import Sum
-from .forms import CarreraForm, RegisterForm, NoticiaForm, LigaForm
+from .forms import CarreraForm, RegisterForm, NoticiaForm, LigaForm,ComentarioForm
 
 from django.views.generic import (
     ListView,
@@ -30,22 +30,87 @@ class CrearLiga(CreateView):
     def form_valid(self, form):
         liga = form.save(commit=False)
         liga.save()
-        # Agregar el usuario actual a la liga creada
         liga.usuarios.add(self.request.user)
+
+        Jugador.objects.create(
+            usuario=self.request.user,
+            liga=liga,
+            saldo=1500000  
+        )
+
         return super().form_valid(form)
     
 class ListaLigas(ListView):
-    model = Liga
+    model = Jugador
     template_name = 'mundialitopx/main/fantasy/fantasy.html'
     context_object_name = 'ligas'
     
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
 
-        context["ligas"] = Liga.objects.filter(usuarios=self.request.user)
+        context["jugadorligas"] = Jugador.objects.filter(usuario=self.request.user)
         context["pilotos"] = PilotoJuego.objects.all().order_by("piloto__escuderia")
 
         return context
+    
+class ListaLigasDisponibles(ListView):
+    model = Liga
+    template_name = 'mundialitopx/main/fantasy/unirse_liga.html'
+    context_object_name = 'ligas'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        usuario_actual = self.request.user
+
+        context["ligaspub"] = Liga.objects.filter(estado='Publico').exclude(usuarios=usuario_actual)
+        context["ligaspriv"] = Liga.objects.filter(estado='Privado').exclude(usuarios=usuario_actual)
+
+        return context
+    
+class DetalleLiga(DetailView):
+    model = Liga
+    template_name = 'mundialitopx/main/fantasy/liga.html'
+    context_object_name = 'liga'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        liga_id = self.kwargs['pk']
+
+        context['clasificacion_jugadores'] = Jugador.objects.filter(liga_id=liga_id).order_by('-puntos_totales')
+
+        usuario_actual = self.request.user
+        jugador_actual = Jugador.objects.get(usuario=usuario_actual, liga_id=liga_id)
+        pilotos_juego_jugador_actual = jugador_actual.piloto.all()
+        context['pilotos_juego_jugador_actual'] = pilotos_juego_jugador_actual
+
+        context['pilotos'] = PilotoJuego.objects.exclude(id__in=pilotos_juego_jugador_actual.values_list('id', flat=True))
+
+        return context
+    
+
+class SeleccionarPiloto(CreateView):
+    model = PilotoJuego
+    template_name = 'mundialitopx/main/fantasy/seleccionar_jugador.html'
+    fields = []
+
+    def get(self, request, pk):
+        self.piloto_pk = pk
+        return super().get(request)
+
+    def form_valid(self, form, pk):
+        jugador = Jugador.objects.filter(usuario=self.request.user)
+        piloto = PilotoJuego.objects.filter(pk=pk)
+
+        if jugador.saldo >= piloto.valor:
+
+            jugador.saldo -= piloto.valor
+            jugador.save()
+
+            jugador.piloto.add(piloto)
+
+            return super().form_valid(form)
+        else:
+            return redirect('liga_jugador')
 # endregion
 
 # region Página Principal
@@ -109,6 +174,14 @@ class DetalleNoticia(DetailView):
     model = Noticia
     template_name = "mundialitopx/main/noticias/detalle_noticia.html"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        noticia = self.get_object()
+
+        context['comentarios'] = Comentario.objects.filter(noticia=noticia)
+
+        return context
+
 class CrearNoticia(CreateView):
     template_name = "mundialitopx/main/noticias/crear_noticia.html"
     form_class = NoticiaForm
@@ -119,6 +192,21 @@ class CrearNoticia(CreateView):
         noticia.fecha_publicacion = datetime.datetime.now().strftime("%Y-%m-%d")
         noticia.save()
         form.save_m2m()
+        return redirect("noticias")
+    
+class CrearComentario(CreateView):
+    template_name = "mundialitopx/main/noticias/crear_comentario.html"
+    form_class = ComentarioForm
+
+    def form_valid(self, form):
+        noticia_id = self.kwargs['noticia_id']
+        noticia = Noticia.objects.get(pk=noticia_id)
+
+        comentario = form.save(commit=False)
+        comentario.autor = self.request.user
+        comentario.noticia = noticia
+        comentario.fecha_publicacion = datetime.datetime.now().strftime("%Y-%m-%d")
+        comentario.save()
         return redirect("noticias")
 
 
@@ -135,18 +223,7 @@ class ListaEscuderias(ListView):
 
         return context
 
-class ListaLigas(ListView):
-    model = Liga
-    template_name = 'mundialitopx/main/fantasy/fantasy.html'
-    context_object_name = 'ligas'
-    
-    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
-        context = super().get_context_data(**kwargs)
 
-        context["ligas"] = Liga.objects.filter(usuarios=self.request.user)
-        context["pilotos"] = PilotoJuego.objects.all().order_by("piloto__escuderia")
-
-        return context
 
 # endregion
 

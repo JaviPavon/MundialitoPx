@@ -41,12 +41,13 @@ from .views import (
     DetalleNoticia, 
     CrearNoticia, 
     DetalleEscuderia, 
-<<<<<<< HEAD
 
     ListaLigas, 
     CrearLiga, 
-=======
->>>>>>> fb1c5b745eb46286be1e81be7d14a21d60a3b474
+    ListaLigasDisponibles, 
+    DetalleLiga, 
+    SeleccionarPiloto, 
+    CrearComentario, 
 )
 
 urlpatterns = [
@@ -58,9 +59,13 @@ urlpatterns = [
     path('inicio/noticias/<int:pk>', DetalleNoticia.as_view(), name='detalle_noticia'),
     path('inicio/escuderias/<int:pk>', DetalleEscuderia.as_view(), name='detalleescuderia'),
     path('inicio/noticias/crear', staff_member_required(CrearNoticia.as_view()), name='crear_noticia'),
+    path('inicio/noticias/comentario/crear/<int:noticia_id>', CrearComentario.as_view(), name='crear_comentario'),
 
     path('inicio/fantasy', ListaLigas.as_view(), name='fantasy'),
     path('inicio/fantasy/crear', staff_member_required(CrearLiga.as_view()), name='crear_liga'),
+    path('inicio/fantasy/ligas', ListaLigasDisponibles.as_view(), name='ligas_disponibles'),
+    path('inicio/fantasy/ligas/<int:pk>', DetalleLiga.as_view(), name='liga_jugador'),
+    path('inicio/fantasy/ligas/piloto/<int:pk>', SeleccionarPiloto.as_view(), name='seleccionar_piloto'),
 
 
     path('inicio/admin', views.admin, name='admin'),

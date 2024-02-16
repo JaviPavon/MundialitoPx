@@ -4,33 +4,49 @@
 <div class="row d-flex justify-content-center">
     <h1>Fantasy Paxangars</h1>
     <h2>Ligas a la que pertenece</h2>
-    {% for liga in ligas %}
+    {% for liga in jugadorligas %}
     <div class="col-4">
-        <div class="card">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-6">
-                        {{ liga.nombre }}
+        <a href="{% url 'liga_jugador' liga.id %}">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-6 text-start">
+                            <div class="row">
+                                <div class="col-12">
+                                    <p>{{ liga.liga.nombre }}</p>
+                                </div>
+                                <div class="col-12">
+                                    <p class="m-0">Saldo: {{ liga.saldo }}€ Puntos: {{ liga.puntos_totales }}pts</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="offset-4 col-2 d-flex align-items-center">
+                            {% if liga.puesto == None %}
+                            <p>Sin Posición</p>
+                            {% else %}
+                            <p>Puesto:{{ liga.puesto }}º</p>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </a>
     </div>
     {% endfor %}
-    <div class="col-12">
+    <div class="col-12 pt-4">
         <div class="row d-flex justify-content-center">
-            <div class="col-4">
+            <div class="col-4 text-end">
                 <a href="{% url 'crear_liga' %}" class="btn btn-primary">Crear Liga</a>
             </div>
-            <div class="col-4">
-                <a class="btn btn-primary">Unirse a una liga</a>
+            <div class="col-4 text-start">
+                <a href="{% url 'ligas_disponibles' %}" class="btn btn-primary">Unirse a una liga</a>
             </div>
         </div>
     </div>
 </div>
 </div>
 <div class="row d-flex justify-content-center">
-    <h2>Pilotos</h2>
+    <h2>Pilotos Disponibles</h2>
     {% for piloto_juego in pilotos %}
     <div class="pt-4 col-2">
         <a href="{% url 'detallepiloto' piloto_juego.piloto.pk %}">
