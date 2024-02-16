@@ -22,9 +22,9 @@
             <div class="card">
                 <div class="card-body">
                     <div class="card-text">
-                        <form action="{% url 'register' %}" method="post">
+                        <form method="post">
                             {% csrf_token %}
-                            {{ form.as_p }}
+                            {{ form }}
                         <input type="hidden" name="next" value="{{ next }}">
                         <button type="submit" class="btn btn-primary">Registrarse</button>
                         </form>

@@ -39,7 +39,7 @@ class CrearLiga(CreateView):
         )
 
         return super().form_valid(form)
-    
+
 class ListaLigas(ListView):
     model = Jugador
     template_name = 'mundialitopx/main/fantasy/fantasy.html'
@@ -52,7 +52,7 @@ class ListaLigas(ListView):
         context["pilotos"] = PilotoJuego.objects.all().order_by("piloto__escuderia")
 
         return context
-    
+
 class ListaLigasDisponibles(ListView):
     model = Liga
     template_name = 'mundialitopx/main/fantasy/unirse_liga.html'
@@ -66,7 +66,7 @@ class ListaLigasDisponibles(ListView):
         context["ligaspriv"] = Liga.objects.filter(estado='Privado').exclude(usuarios=usuario_actual)
 
         return context
-    
+
 class DetalleLiga(DetailView):
     model = Liga
     template_name = 'mundialitopx/main/fantasy/liga.html'
@@ -86,7 +86,7 @@ class DetalleLiga(DetailView):
         context['pilotos'] = PilotoJuego.objects.exclude(id__in=pilotos_juego_jugador_actual.values_list('id', flat=True))
 
         return context
-    
+
 
 class SeleccionarPiloto(CreateView):
     model = PilotoJuego
@@ -127,7 +127,7 @@ class ListaNoticias(ListView):
         context = super().get_context_data(**kwargs)
 
         context["noticias"] = Noticia.objects.all()
-        context["circuitos"] = Circuito.objects.all()
+        context["circuitos"] = Circuito.objects.all().order_by("fecha")
 
         return context
 
@@ -193,7 +193,7 @@ class CrearNoticia(CreateView):
         noticia.save()
         form.save_m2m()
         return redirect("noticias")
-    
+
 class CrearComentario(CreateView):
     template_name = "mundialitopx/main/noticias/crear_comentario.html"
     form_class = ComentarioForm
@@ -210,7 +210,6 @@ class CrearComentario(CreateView):
         return redirect("noticias")
 
 
-
 class ListaEscuderias(ListView):
     model = Escuderia
     template_name = "mundialitopx/main/escuderias/escuderias.html"
@@ -222,7 +221,6 @@ class ListaEscuderias(ListView):
         context["escuderias"] = Escuderia.objects.all().order_by("nombre")
 
         return context
-
 
 
 # endregion
