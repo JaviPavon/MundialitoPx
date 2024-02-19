@@ -137,3 +137,64 @@ a{
     text-align: justify;
 }
 
+.circuito {
+    width: 400px;
+    height: 250px;
+}
+
+.cir {
+    width: 400px;
+}
+
+article {
+    position: relative;
+    width: 400px;
+    transition: all .3s ease;
+}
+
+article img:first-child {
+    box-shadow: 0 60px 60px -60px #15151E;
+    border-radius: 4px;
+    object-fit: cover;
+    width: 100%;
+}
+
+article img:last-child {
+    position: absolute;
+    width: 270px;
+    top: -40px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    transform: translateY(25%);
+    transition: .3s ease;
+    opacity: 0;
+}
+
+article:hover {
+    transform: perspective(400px) rotateX(20deg) translateY(-5%) translateZ(0);
+}
+
+article::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    height: 100%;
+    width: 100%;
+    background-image: linear-gradient(to bottom,
+            transparent 10%,
+            #FF1E00 50%,
+            #FF1E00 95%);
+    opacity: 0;
+    transition: all .3s ease;
+}
+
+article:hover::before {
+    opacity: 1;
+}
+
+article:hover img:last-child {
+    opacity: 1;
+    transform: translateY(20%);
+}

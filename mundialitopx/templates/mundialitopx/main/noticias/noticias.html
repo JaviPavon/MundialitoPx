@@ -15,10 +15,20 @@
     <div class="row">
         <div class="col-5">
             <h2>Carreras</h2>
-            <div class="row d-flex justify-content-center">
+            <div class="row pt-3 text-white gy-5 d-flex justify-content-center">
                 {% for circuito in circuitos %}
-                    <div class="col-5 carrera bg-primary">
-                        <img class="img-fluid" src="{{ circuito.pista.url }}" alt="">
+                    <div class="col-5 position-relative">
+                        <article>
+                            <div class="position-absolute top-0 start-50 translate-middle-x ">
+                                <h2 class="cir text-white">{{ circuito.nombre }}</h2>
+                                <h3>{{ circuito.alias }}</h3>
+                            </div>
+                            <img class="circuito" src="{{ circuito.pista.url }}" alt="">
+                            <div class="position-absolute bottom-0 start-50 translate-middle-x">
+                                <h2 class="cir text-white">{{ circuito.fecha|date:"d-m-Y" }}</h2>
+                            </div>
+                            <img class="silueta " src="{{ circuito.silueta.url }}" alt="">
+                        </article>
                     </div>
                 {% endfor %}
             </div>
@@ -29,39 +39,7 @@
                 <div class="row pt-3 g-0 d-flex justify-content-center">
                     <a class="text-decoration-none" href="{% url 'detalle_noticia' noticia.pk %}">
                         <div class="col-11 ">
-                            <div class="row d-flex justify-content-end">
-                                {% if noticia.circuito %}
-                                    <div class="col-3">
-                                        <div class="card tema">
-                                            <div class="card-body">
-                                                <h3>{{ noticia.circuito }}</h3>
-                                            </div>
-                                        </div>
-                                    </div>
-                                {% endif %}
-                                {% if noticia.escuderia.all.count > 0 %}
-                                    <div class="col-3">
-                                        {% for escuderia in noticia.escuderia.all %}
-                                            <div class="card tema">
-                                                <div class="card-body ">
-                                                    <h3>{{ escuderia.nombre }}</h3>
-                                                </div>
-                                            </div>
-                                        {% endfor %}
-                                    </div>
-                                {% endif %}
-                                {% if noticia.piloto.all.count > 0 %}
-                                    <div class="col-2">
-                                        {% for piloto in noticia.piloto.all %}
-                                            <div class="card tema">
-                                                <div class="card-body">
-                                                    <h3>{{ piloto.nombre }}</h3>
-                                                </div>
-                                            </div>
-                                        {% endfor %}
-                                    </div>
-                                {% endif %}
-                            </div>
+                            
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="row">
