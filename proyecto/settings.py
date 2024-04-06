@@ -30,7 +30,7 @@ SECRET_KEY = "django-insecure-vhs(!$hc%57hed5poj$y5f+&d^&lu=mr^jcx!o7ub1rwbm5*h-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1"]
+ALLOWED_HOSTS = ['jpavon.pythonanywhere.com']
 
 # Application definition
 
