@@ -20,6 +20,8 @@ from django.urls import reverse_lazy
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+
+
 AUTH_USER_MODEL = "mundialitopx.Usuario"
 
 # Quick-start development settings - unsuitable for production
@@ -150,3 +152,10 @@ LOGOUT_REDIRECT_URL = reverse_lazy("inicio")
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = Path(BASE_DIR / 'media')
+
+# Ruta al archivo Formula1-Bold.otf
+archivo_fuente = os.path.join(MEDIA_ROOT, 'F1-Fuentes', 'Formula1-Bold.otf')
+
+# Verificar si el archivo existe
+if not os.path.exists(archivo_fuente):
+    print(f"El archivo {archivo_fuente} no existe.")
