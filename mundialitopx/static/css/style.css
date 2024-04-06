@@ -138,17 +138,17 @@ a{
 }
 
 .circuito {
-    width: 400px;
-    height: 250px;
+    width: 300px;
+        height: 200px;
 }
 
 .cir {
-    width: 400px;
+    width: 300px;
 }
 
 article {
     position: relative;
-    width: 400px;
+    width: 300px;
     transition: all .3s ease;
 }
 

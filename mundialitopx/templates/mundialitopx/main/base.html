@@ -40,18 +40,15 @@
                     </a>
                   </li>
                   <li class="align-items-center d-flex">
-                    <a href="{% url 'fantasy' %}" class="a-banner nav-link">
+                    <a href="{% url 'fantasy' %}" class="a-banner nav-link disabled" aria-disabled="true">
                       Fantasy
                     </a>
                   </li>
                   <li class="align-items-center d-flex">
                       <div class="dropdown text-end">
-                          <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                            {% if request.user.fotoperfil.url %}
-                            <img src="{{ request.user.fotoperfil.url }}" alt="foto-perfil" width="32" height="32" class="rounded-circle">
-                            {% else %}
+                          <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
+                            aria-expanded="false">
                             <img src="../../../../media/anonimo_perfil.png" alt="foto-perfil" width="32" height="32" class="rounded-circle">
-                            {% endif %}
                           </a>
                           <ul class="dropdown-menu dropdown-menu-lg-end">
                             {% if user.is_authenticated %}

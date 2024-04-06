@@ -218,7 +218,7 @@ class ListaEscuderias(ListView):
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
 
-        context["escuderias"] = Escuderia.objects.all().order_by("nombre")
+        context["escuderias"] = Escuderia.objects.all().order_by("-puntos")
 
         return context
 
