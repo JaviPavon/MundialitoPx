@@ -1,5 +1,5 @@
 import datetime
-from typing import Any, Dict  # Importa Dict desde typing
+from typing import Any
 from django.db.models.query import QuerySet
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpRequest, HttpResponse
@@ -22,7 +22,7 @@ from django.views.generic import (
 # region Fantasy
 
 
-class CrearLiga(LoginRequiredMixin, CreateView):
+class CrearLiga(CreateView):
     template_name = "mundialitopx/main/fantasy/crear_liga.html"
     form_class = LigaForm
     success_url = reverse_lazy("fantasy")
@@ -40,37 +40,34 @@ class CrearLiga(LoginRequiredMixin, CreateView):
 
         return super().form_valid(form)
 
-class ListaLigas(LoginRequiredMixin, ListView):
+class ListaLigas(ListView):
     model = Jugador
     template_name = 'mundialitopx/main/fantasy/fantasy.html'
     context_object_name = 'ligas'
     
-    def get_queryset(self):
-        return Jugador.objects.filter(usuario=self.request.user)
-
-    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:  # Cambia la anotación de tipo aquí
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
 
+        context["jugadorligas"] = Jugador.objects.filter(usuario=self.request.user)
         context["pilotos"] = PilotoJuego.objects.all().order_by("piloto__escuderia")
 
         return context
 
-class ListaLigasDisponibles(LoginRequiredMixin, ListView):
+class ListaLigasDisponibles(ListView):
     model = Liga
     template_name = 'mundialitopx/main/fantasy/unirse_liga.html'
     context_object_name = 'ligas'
 
-    def get_queryset(self):
-        usuario_actual = self.request.user
-        return Liga.objects.filter(estado='Publico').exclude(usuarios=usuario_actual)
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         usuario_actual = self.request.user
+
+        context["ligaspub"] = Liga.objects.filter(estado='Publico').exclude(usuarios=usuario_actual)
         context["ligaspriv"] = Liga.objects.filter(estado='Privado').exclude(usuarios=usuario_actual)
+
         return context
 
-class DetalleLiga(LoginRequiredMixin, DetailView):
+class DetalleLiga(DetailView):
     model = Liga
     template_name = 'mundialitopx/main/fantasy/liga.html'
     context_object_name = 'liga'
@@ -91,7 +88,7 @@ class DetalleLiga(LoginRequiredMixin, DetailView):
         return context
 
 
-class SeleccionarPiloto(LoginRequiredMixin, CreateView):
+class SeleccionarPiloto(CreateView):
     model = PilotoJuego
     template_name = 'mundialitopx/main/fantasy/seleccionar_jugador.html'
     fields = []
@@ -126,7 +123,7 @@ class ListaNoticias(ListView):
     template_name = "mundialitopx/main/noticias/noticias.html"
     context_object_name = "noticias"
 
-    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:  # Cambia la anotación de tipo aquí
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
 
         context["noticias"] = Noticia.objects.all()
@@ -140,7 +137,7 @@ class ListaPilotos(ListView):
     template_name = "mundialitopx/main/pilotos/pilotos.html"
     context_object_name = "pilotos"
 
-    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:  # Cambia la anotación de tipo aquí
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
 
         context["pilotos"] = Piloto.objects.all().order_by("escuderia")
@@ -153,7 +150,7 @@ class DetallePiloto(DetailView):
     model = Piloto
     template_name = "mundialitopx/main/pilotos/detalle_piloto.html"
 
-    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:  # Cambia la anotación de tipo aquí
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         piloto = self.object
         context["carreras"] = Carrera.objects.filter(piloto=piloto)
@@ -164,7 +161,7 @@ class DetalleEscuderia(DetailView):
     model = Escuderia
     template_name = "mundialitopx/main/escuderias/detalle_escuderia.html"
 
-    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:  # Cambia la anotación de tipo aquí
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         escuderia = self.object
         context["carreras"] = Carrera.objects.filter(piloto__escuderia=escuderia)
@@ -218,7 +215,7 @@ class ListaEscuderias(ListView):
     template_name = "mundialitopx/main/escuderias/escuderias.html"
     context_object_name = "escuderias"
 
-    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:  # Cambia la anotación de tipo aquí
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
 
         context["escuderias"] = Escuderia.objects.all().order_by("-puntos")
@@ -231,79 +228,79 @@ class ListaEscuderias(ListView):
 # region Menú de Admin
 
 
-def register(request):
-    if request.method == "POST":
-        form = RegisterForm(request.POST)
+def register(response):
+    if response.method == "POST":
+        form = RegisterForm(response.POST)
         if form.is_valid():
             form.save()
         return redirect("inicio")
     else:
         form = RegisterForm()
-        return render(request, "registration/registrar.html", {"form": form})
+        return render(response, "registration/registrar.html", {"form": form})
 
 
 def admin(request):
     return render(request, "mundialitopx/admin/admin.html", {})
 
 
-class ListPaises(LoginRequiredMixin, ListView):
+class ListPaises(ListView):
     model = Pais
     template_name = "mundialitopx/admin/pais.html"
     context_object_name = "paises"
 
 
-class ListPilotos(LoginRequiredMixin, ListView):
+class ListPilotos(ListView):
     model = Piloto
     template_name = "mundialitopx/admin/piloto.html"
     context_object_name = "pilotos"
 
 
-class ListEscuderias(LoginRequiredMixin, ListView):
+class ListEscuderias(ListView):
     model = Escuderia
     template_name = "mundialitopx/admin/escuderia.html"
     context_object_name = "escuderias"
 
 
-class ListCircuitos(LoginRequiredMixin, ListView):
+class ListCircuitos(ListView):
     model = Circuito
     template_name = "mundialitopx/admin/circuito.html"
     context_object_name = "circuitos"
 
 
-class ListCarreras(LoginRequiredMixin, ListView):
+class ListCarreras(ListView):
     model = Carrera
     template_name = "mundialitopx/admin/carrera.html"
 
-    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:  # Cambia la anotación de tipo aquí
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         piloto = self.request.GET.get("piloto")
         circuito = self.request.GET.get("circuito")
 
         context["circuitos"] = Circuito.objects.all()
         context["carreras"] = Carrera.objects.all()
-        if piloto != "todo" and piloto is not None:
+        if piloto != "todo" and piloto != None:
             context["carreras"] = context["carreras"].filter(
                 piloto__nombre__contains=piloto
             )
-        if circuito != "todo" and circuito is not None:
+        if circuito != "todo" and circuito != None:
             context["carreras"] = context["carreras"].filter(circuito=circuito)
         return context
 
 
 # endregion
 # region CRUD Pais
-class DetallesPais(LoginRequiredMixin, DetailView):
+class DetallesPais(DetailView):
     model = Pais
     template_name = "mundialitopx/admin/paises/detalle.html"
 
 
-class BorrarPais(LoginRequiredMixin, DeleteView):
+class BorrarPais(DeleteView):
     model = Pais
     template_name = "mundialitopx/admin/paises/borrar.html"
     success_url = reverse_lazy("admin")
 
 
-class EditarPais(LoginRequiredMixin, UpdateView):
+class EditarPais(UpdateView):
     model = Pais
     fields = ["nombre", "bandera"]
     template_name = "mundialitopx/admin/paises/editar.html"
@@ -311,7 +308,7 @@ class EditarPais(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy("admin")
 
 
-class CrearPais(LoginRequiredMixin, CreateView):
+class CrearPais(CreateView):
     model = Pais
     fields = ["nombre", "bandera"]
     template_name = "mundialitopx/admin/paises/crear.html"
@@ -320,18 +317,18 @@ class CrearPais(LoginRequiredMixin, CreateView):
 
 # endregion
 # region CRUD Escuderia
-class DetallesEscuderia(LoginRequiredMixin, DetailView):
+class DetallesEscuderia(DetailView):
     model = Escuderia
     template_name = "mundialitopx/admin/escuderias/detalle.html"
 
 
-class BorrarEscuderia(LoginRequiredMixin, DeleteView):
+class BorrarEscuderia(DeleteView):
     model = Escuderia
     template_name = "mundialitopx/admin/escuderias/borrar.html"
     success_url = reverse_lazy("admin")
 
 
-class EditarEscuderia(LoginRequiredMixin, UpdateView):
+class EditarEscuderia(UpdateView):
     model = Escuderia
     fields = ["nombre", "alias", "monoplaza", "pais", "logo", "puesto", "descripcion"]
     template_name = "mundialitopx/admin/escuderias/editar.html"
@@ -339,7 +336,7 @@ class EditarEscuderia(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy("admin")
 
 
-class CrearEscuderia(LoginRequiredMixin, CreateView):
+class CrearEscuderia(CreateView):
     model = Escuderia
     fields = ["nombre", "alias", "monoplaza", "pais", "logo", "puesto", "descripcion"]
     template_name = "mundialitopx/admin/escuderias/crear.html"
@@ -348,18 +345,18 @@ class CrearEscuderia(LoginRequiredMixin, CreateView):
 
 # endregion
 # region CRUD Piloto
-class DetallesPiloto(LoginRequiredMixin, DetailView):
+class DetallesPiloto(DetailView):
     model = Piloto
     template_name = "mundialitopx/admin/pilotos/detalle.html"
 
 
-class BorrarPiloto(LoginRequiredMixin, DeleteView):
+class BorrarPiloto(DeleteView):
     model = Piloto
     template_name = "mundialitopx/admin/pilotos/borrar.html"
     success_url = reverse_lazy("admin")
 
 
-class EditarPiloto(LoginRequiredMixin, UpdateView):
+class EditarPiloto(UpdateView):
     model = Piloto
     fields = ["nombre", "dorsal", "escuderia", "pais", "foto", "puesto", "biografia"]
     template_name = "mundialitopx/admin/pilotos/editar.html"
@@ -367,7 +364,7 @@ class EditarPiloto(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy("admin")
 
 
-class CrearPiloto(LoginRequiredMixin, CreateView):
+class CrearPiloto(CreateView):
     model = Piloto
     fields = ["nombre", "dorsal", "escuderia", "pais", "foto", "puesto", "biografia"]
     template_name = "mundialitopx/admin/pilotos/crear.html"
@@ -376,18 +373,18 @@ class CrearPiloto(LoginRequiredMixin, CreateView):
 
 # endregion
 # region CRUD Circuito
-class DetallesCircuito(LoginRequiredMixin, DetailView):
+class DetallesCircuito(DetailView):
     model = Circuito
     template_name = "mundialitopx/admin/circuitos/detalle.html"
 
 
-class BorrarCircuito(LoginRequiredMixin, DeleteView):
+class BorrarCircuito(DeleteView):
     model = Circuito
     template_name = "mundialitopx/admin/circuitos/borrar.html"
     success_url = reverse_lazy("admin")
 
 
-class EditarCircuito(LoginRequiredMixin, UpdateView):
+class EditarCircuito(UpdateView):
     model = Circuito
     fields = ["nombre", "alias", "pista", "pais","silueta"]
     template_name = "mundialitopx/admin/circuitos/editar.html"
@@ -395,7 +392,7 @@ class EditarCircuito(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy("admin")
 
 
-class CrearCircuito(LoginRequiredMixin, CreateView):
+class CrearCircuito(CreateView):
     model = Circuito
     fields = ["nombre", "alias", "pista", "pais","silueta"]
     template_name = "mundialitopx/admin/circuitos/crear.html"
@@ -404,12 +401,12 @@ class CrearCircuito(LoginRequiredMixin, CreateView):
 
 # endregion
 # region CRUD Carrera
-class DetallesCarrera(LoginRequiredMixin, DetailView):
+class DetallesCarrera(DetailView):
     model = Carrera
     template_name = "mundialitopx/admin/carreras/detalle.html"
 
 
-class BorrarCarrera(LoginRequiredMixin, DeleteView):
+class BorrarCarrera(DeleteView):
     model = Carrera
     template_name = "mundialitopx/admin/carreras/borrar.html"
     success_url = reverse_lazy("admin")
@@ -432,7 +429,7 @@ class BorrarCarrera(LoginRequiredMixin, DeleteView):
         return redirect("carrera")
 
 
-class CrearCarrera(LoginRequiredMixin, CreateView):
+class CrearCarrera(CreateView):
     nombre_template = "mundialitopx/admin/carreras/crear.html"
 
     def get(self, request):
@@ -498,7 +495,7 @@ class CrearCarrera(LoginRequiredMixin, CreateView):
         return redirect("carrera")
 
 
-class EditarCarrera(LoginRequiredMixin, UpdateView):
+class EditarCarrera(UpdateView):
     model = Carrera
     fields = ["piloto", "circuito", "puesto", "estado", "vuelta_rapida"]
     template_name = "mundialitopx/admin/carreras/editar.html"
