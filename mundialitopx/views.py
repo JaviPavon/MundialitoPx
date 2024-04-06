@@ -1,5 +1,5 @@
 import datetime
-from typing import Any
+from typing import Any, Dict  # Importa Dict desde typing
 from django.db.models.query import QuerySet
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpRequest, HttpResponse
@@ -48,7 +48,7 @@ class ListaLigas(LoginRequiredMixin, ListView):
     def get_queryset(self):
         return Jugador.objects.filter(usuario=self.request.user)
 
-    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:  # Cambia la anotación de tipo aquí
         context = super().get_context_data(**kwargs)
 
         context["pilotos"] = PilotoJuego.objects.all().order_by("piloto__escuderia")
@@ -126,7 +126,7 @@ class ListaNoticias(ListView):
     template_name = "mundialitopx/main/noticias/noticias.html"
     context_object_name = "noticias"
 
-    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:  # Cambia la anotación de tipo aquí
         context = super().get_context_data(**kwargs)
 
         context["noticias"] = Noticia.objects.all()
@@ -140,7 +140,7 @@ class ListaPilotos(ListView):
     template_name = "mundialitopx/main/pilotos/pilotos.html"
     context_object_name = "pilotos"
 
-    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:  # Cambia la anotación de tipo aquí
         context = super().get_context_data(**kwargs)
 
         context["pilotos"] = Piloto.objects.all().order_by("escuderia")
@@ -153,7 +153,7 @@ class DetallePiloto(DetailView):
     model = Piloto
     template_name = "mundialitopx/main/pilotos/detalle_piloto.html"
 
-    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:  # Cambia la anotación de tipo aquí
         context = super().get_context_data(**kwargs)
         piloto = self.object
         context["carreras"] = Carrera.objects.filter(piloto=piloto)
@@ -164,7 +164,7 @@ class DetalleEscuderia(DetailView):
     model = Escuderia
     template_name = "mundialitopx/main/escuderias/detalle_escuderia.html"
 
-    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:  # Cambia la anotación de tipo aquí
         context = super().get_context_data(**kwargs)
         escuderia = self.object
         context["carreras"] = Carrera.objects.filter(piloto__escuderia=escuderia)
@@ -218,7 +218,7 @@ class ListaEscuderias(ListView):
     template_name = "mundialitopx/main/escuderias/escuderias.html"
     context_object_name = "escuderias"
 
-    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:  # Cambia la anotación de tipo aquí
         context = super().get_context_data(**kwargs)
 
         context["escuderias"] = Escuderia.objects.all().order_by("-puntos")
@@ -274,7 +274,7 @@ class ListCarreras(LoginRequiredMixin, ListView):
     model = Carrera
     template_name = "mundialitopx/admin/carrera.html"
 
-    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:  # Cambia la anotación de tipo aquí
         context = super().get_context_data(**kwargs)
         piloto = self.request.GET.get("piloto")
         circuito = self.request.GET.get("circuito")
