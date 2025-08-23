@@ -217,3 +217,7 @@ Route::post('cerrar-sesion', [LoginController::class, 'logout'])->name('cerrar-s
 
 // Ruta de inicio para usuarios autenticados
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
