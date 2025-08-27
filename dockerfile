@@ -1,4 +1,4 @@
-# Dockerfile para Laravel 10 + Symfony 7 en Railway
+# Dockerfile para Laravel 10 + Symfony 7
 FROM php:8.2-fpm
 
 # Instalar dependencias del sistema necesarias
@@ -8,7 +8,7 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /app
 
-# Copiar código
+# Copiar código de la app
 COPY . /app
 
 # Instalar dependencias PHP y JS
